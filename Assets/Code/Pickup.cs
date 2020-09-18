@@ -18,16 +18,16 @@ public class Pickup : MonoBehaviour
     [Tooltip("The amount of dollars the player will lose or receive on pickup")]
     public int MoneyAmount;
 
-    SpriteOutline _spriteOutline;
+    SpriteOutline spriteOutline;
 
     void Start()
     {
-        _spriteOutline = GetComponent<SpriteOutline>();
+        spriteOutline = GetComponent<SpriteOutline>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _spriteOutline.color = Color.yellow;
+        spriteOutline.Color = Color.yellow;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -71,6 +71,6 @@ public class Pickup : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _spriteOutline.color = Color.white;
+        spriteOutline.Color = Color.white;
     }
 }
