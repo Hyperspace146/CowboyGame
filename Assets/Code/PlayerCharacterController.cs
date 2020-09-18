@@ -41,7 +41,7 @@ public class PlayerCharacterController : MonoBehaviour {
         //have the camera follow the player
         //implement functionality that makes it so the camera follows the crosshair(up to a certain extent)
         float offset = .5f;
-        int camPosZ = -40;
+
  
         int range = 20; //specified range at which moving the crosshair will have an affect on the camera's position
         float minX = rb.position.x - range;
@@ -52,7 +52,7 @@ public class PlayerCharacterController : MonoBehaviour {
         float xPos = Mathf.Clamp((rb.position.x + crosshairPos.x) * offset, minX, maxX);
         float yPos = Mathf.Clamp((rb.position.y + crosshairPos.y) * offset, minY, maxY);
 
-        cam.transform.position = new Vector3(xPos, yPos, camPosZ);
+        cam.transform.position = new Vector3(xPos, yPos, cam.transform.position.z);
        
     }
     

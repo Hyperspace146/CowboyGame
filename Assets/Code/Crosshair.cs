@@ -48,7 +48,7 @@ public class Crosshair : MonoBehaviour {
         float xPos = Mathf.Clamp(pos.x, minX, maxX);
         float yPos = Mathf.Clamp(pos.y, minY, maxY);
         transform.position = new Vector2(xPos, yPos);
-        Debug.Log("In-game coordinates: " + xPos + ", " + yPos);
+       // Debug.Log("In-game coordinates: " + xPos + ", " + yPos);
         
         
     }

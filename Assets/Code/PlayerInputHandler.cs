@@ -55,7 +55,7 @@ public class PlayerInputHandler : MonoBehaviour {
         controls.Gameplay.Rotate.performed += context => crossHair = context.ReadValue<Vector2>();
         
         controls.Gameplay.Rotate.canceled += context => crossHair = Vector2.zero;//new Vector2(1f, 1f); //reset value when not moving thumbstick
-        Debug.Log("input coordinates: " + crossHair.x + " " + crossHair.y);
+        //Debug.Log("input coordinates: " + crossHair.x + " " + crossHair.y);
    }
 
 
