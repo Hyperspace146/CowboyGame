@@ -69,7 +69,7 @@ public class PlayerCharacterController : MonoBehaviour {
         rb.MovePosition(rb.position + displacement * Time.fixedDeltaTime);
 
         //atan2 uses trig to find the angle 
-        float angle = Mathf.Atan2(crosshairPos.y, crosshairPos.x) * Mathf.Rad2Deg - 90f; //offset by 90
+        float angle = Mathf.Atan2(crosshairPos.y, crosshairPos.x) * Mathf.Rad2Deg; //offset by 90
         rb.rotation = angle; //finally, change the player's rotation based on crosshair vector
         ShiftCamera();
 

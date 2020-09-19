@@ -2,10 +2,10 @@
 
 [ExecuteInEditMode]
 public class SpriteOutline : MonoBehaviour {
-    public Color color = Color.white;
+    public Color Color = Color.white;
 
     [Range(0, 16)]
-    public int outlineSize = 1;
+    public int OutlineSize = 1;
 
     private SpriteRenderer spriteRenderer;
 
@@ -27,8 +27,8 @@ public class SpriteOutline : MonoBehaviour {
         MaterialPropertyBlock mpb = new MaterialPropertyBlock();
         spriteRenderer.GetPropertyBlock(mpb);
         mpb.SetFloat("_Outline", outline ? 1f : 0);
-        mpb.SetColor("_OutlineColor", color);
-        mpb.SetFloat("_OutlineSize", outlineSize);
+        mpb.SetColor("_OutlineColor", Color);
+        mpb.SetFloat("_OutlineSize", OutlineSize);
         spriteRenderer.SetPropertyBlock(mpb);
     }
 }

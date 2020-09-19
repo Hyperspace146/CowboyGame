@@ -6,44 +6,44 @@ public class Health : MonoBehaviour
 {
     public int BaseMaxHealth;
 
-    public int _maxHealth;      // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
-    public int _health;         // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
-    public bool _isDead;        // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
-    RespawnManager _respawnManager;
-    SpriteRenderer _spriteRenderer;  // temp
+    public int maxHealth;      // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
+    public int health;         // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
+    public bool isDead;        // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
+    RespawnManager respawnManager;
+    SpriteRenderer spriteRenderer;  // temp
 
     void Start()
     {
-        _respawnManager = FindObjectOfType<RespawnManager>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _maxHealth = BaseMaxHealth;
-        _health = BaseMaxHealth;
-        _isDead = false;
+        respawnManager = FindObjectOfType<RespawnManager>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        maxHealth = BaseMaxHealth;
+        health = BaseMaxHealth;
+        isDead = false;
     }
 
     public void RefillHealth()
     {
-        _isDead = false;
-        _health = _maxHealth;
+        isDead = false;
+        health = maxHealth;
     }
 
     public void ChangeMaxHealth(int value)
     {
-        _maxHealth += value;
-        if (_maxHealth < 1)
+        maxHealth += value;
+        if (maxHealth < 1)
         {
-            _maxHealth = 1;
+            maxHealth = 1;
         }
     }
 
     // Change the player's health by the given value 
     public void ChangeHealth(int value)
     {
-        _health += value;
-        _health = Mathf.Clamp(_health, 0, _maxHealth);
-        if (_health <= 0 && !_isDead)
+        health += value;
+        health = Mathf.Clamp(health, 0, maxHealth);
+        if (health <= 0 && !isDead)
         {
-            _isDead = true;
+            isDead = true;
             Kill();
         }
     }
@@ -55,10 +55,10 @@ public class Health : MonoBehaviour
         {
             // TODO: Disable any character control
             // temp: disabling sprite renderer
-            _spriteRenderer.enabled = false;
+            spriteRenderer.enabled = false;
             // TODO: Play the death animation
             // After a certain amount of respawn time, respawn in a certain location
-            _respawnManager.RespawnPlayer(this.gameObject);
+            respawnManager.RespawnPlayer(this.gameObject);
         }
         else
         {
@@ -72,7 +72,7 @@ public class Health : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             ChangeHealth(-10);
-            Debug.Log(_health);
+            Debug.Log(health);
         }
     }
 }
