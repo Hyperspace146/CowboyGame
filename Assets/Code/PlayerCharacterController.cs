@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerStats), typeof(PlayerInputHandler))]
 public class PlayerCharacterController : MonoBehaviour {
 
-    public float moveSpeed;
     public Rigidbody2D rb;
     public Transform cam; //Transform provides information about position, rotation, and scale
 
     private Vector2 displacement;
     private Vector2 rotation;
     private Vector2 crosshairPos;
+    private float moveSpeedMultiplier = 0.5f;
 
     private PlayerInputHandler inputHandler; //get the inputhandler script so we have access to its methods from here
+    private PlayerStats playerStats;
     private GameObject crosshair;
     private Crosshair crosshairScript;
 
@@ -21,6 +23,7 @@ public class PlayerCharacterController : MonoBehaviour {
         //so that we have access to its methods
  
         inputHandler = GetComponent<PlayerInputHandler>();
+        playerStats = GetComponent<PlayerStats>();
         crosshair = GameObject.FindWithTag("Crosshair");
         crosshairScript = crosshair.GetComponent<Crosshair>();
         if (crosshairScript == null)
@@ -61,7 +64,7 @@ public class PlayerCharacterController : MonoBehaviour {
     }
     
     void HandleCharacterMovement() {
-        displacement = moveSpeed * inputHandler.GetMoveInput();
+        displacement = playerStats.speed * moveSpeedMultiplier * inputHandler.GetMoveInput();
         crosshairPos = crosshairScript.GetCrosshairPos();
     }
 

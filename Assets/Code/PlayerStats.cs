@@ -10,11 +10,13 @@ public class PlayerStats : MonoBehaviour
     public int InitialMoney;
     public int InitialBounty;
 
-    public int attack;     // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
-    public int defense;    // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
-    public int speed;      // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
-    public int money;      // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
-    public int bounty;     // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
+    // These stats can be public read, but can only be set within this class. To change these 
+    // values from other scripts, use the below methods.
+    public int attack { get; private set; }     
+    public int defense { get; private set; }   
+    public int speed { get; private set; }    
+    public int money { get; private set; }      
+    public int bounty { get; private set; }     
 
     void Start()
     {
@@ -52,7 +54,7 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    // Returns false and does not allow the change if it would lead to a negative sum of money
+    // Returns false and does not deduct money if it would lead to a negative sum of money
     public bool ChangeMoneySum(int value)
     {
         if (money + value > 0)

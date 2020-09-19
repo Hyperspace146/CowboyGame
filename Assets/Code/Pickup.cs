@@ -37,7 +37,7 @@ public class Pickup : MonoBehaviour
         PlayerStats playerStats = collision.GetComponent<PlayerStats>();
 
         // Check for Interact button input and player scripts
-        if (Input.GetKeyDown(KeyCode.F) && playerHealth != null && playerStats != null /*&& player.GetComponent<PlayerInputHandler>().GetInteractInputDown())*/)
+        if (playerHealth != null && playerStats != null /*&& player.GetComponent<PlayerInputHandler>().GetInteractInputDown())*/)
         {
             // TODO: change outline color
             // Apply all stat/health changes if non-zero
