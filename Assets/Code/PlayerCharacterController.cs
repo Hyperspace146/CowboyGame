@@ -36,6 +36,19 @@ public class PlayerCharacterController : MonoBehaviour {
     void Update() {
         //HandleCharacterActions();
         HandleCharacterMovement();
+
+        if (inputHandler.GetFireInputDown()) {
+            Debug.Log("fire pressed");
+        }
+
+        if (inputHandler.GetFireInputHeld()) {
+            Debug.Log("fire held");
+        }
+
+        if (inputHandler.GetFireInputUp()) {
+            Debug.Log("fire stopped");
+        }
+
     }
 
     void ShiftCamera() {
@@ -69,9 +82,7 @@ public class PlayerCharacterController : MonoBehaviour {
         //still a lil' confused by Time.fixedDeltaTime, but I'll figure it out later
         rb.MovePosition(rb.position + displacement * Time.fixedDeltaTime);
 
-        //atan2 uses trig to find the angle 
-        float angle = Mathf.Atan2(crosshairPos.y, crosshairPos.x) * Mathf.Rad2Deg; //offset by 90
-        rb.rotation = angle; //finally, change the player's rotation based on crosshair vector
+
         ShiftCamera();
 
     }

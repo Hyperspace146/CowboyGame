@@ -70,6 +70,19 @@ public class PlayerInputHandler : MonoBehaviour {
        controls.Gameplay.Shoot.canceled += context => shootHeldDown = false;
    }
 
+   public bool GetFireInputDown() {
+       return shootPressed;
+   }
+
+   public bool GetFireInputHeld() {
+       return shootHeldDown;
+   }
+
+   public bool GetFireInputUp() {
+       return !shootPressed;
+   }
+
+
    private void DetectInteractInput() {
 
 
