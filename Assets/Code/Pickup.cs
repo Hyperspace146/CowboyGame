@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(SpriteOutline))]
 public class Pickup : MonoBehaviour
 {
     [Tooltip("The amount of points the player's max health stat will increase by on pickup")]
@@ -38,7 +39,6 @@ public class Pickup : MonoBehaviour
         // Check for Interact button input and player scripts
         if (Input.GetKeyDown(KeyCode.F) && playerHealth != null && playerStats != null /*&& player.GetComponent<PlayerInputHandler>().GetInteractInputDown())*/)
         {
-            Debug.LogWarning("yay!");
             // TODO: change outline color
             // Apply all stat/health changes if non-zero
             if (MaxHealthBuff != 0)

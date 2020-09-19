@@ -23,6 +23,10 @@ public class PlayerCharacterController : MonoBehaviour {
         inputHandler = GetComponent<PlayerInputHandler>();
         crosshair = GameObject.FindWithTag("Crosshair");
         crosshairScript = crosshair.GetComponent<Crosshair>();
+        if (crosshairScript == null)
+        {
+            Debug.Log("null");
+        }
     }
 
     /*
