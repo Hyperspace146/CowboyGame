@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D), typeof(PlayerInputHandler), typeof(Crosshair))]
 public class PlayerCharacterController : MonoBehaviour {
 
     public float moveSpeed;

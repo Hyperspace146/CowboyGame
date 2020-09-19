@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D), typeof(PlayerInputHandler), typeof(Camera))]
+
 //Script to keep the crosshair at the same location as the mouse
 public class Crosshair : MonoBehaviour {
     
