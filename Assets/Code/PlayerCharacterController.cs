@@ -37,6 +37,15 @@ public class PlayerCharacterController : MonoBehaviour {
         //HandleCharacterActions();
         HandleCharacterMovement();
 
+        TestInputCommands();
+       
+
+
+
+    }
+
+    private void TestInputCommands() {
+         
         if (inputHandler.GetFireInputDown()) {
             Debug.Log("fire pressed");
         }
@@ -48,7 +57,32 @@ public class PlayerCharacterController : MonoBehaviour {
         if (inputHandler.GetFireInputUp()) {
             Debug.Log("fire stopped");
         }
+        
+/*
+        if (inputHandler.GetMeleeInputDown()) {
+            Debug.Log("melee pressed");
+        }
 
+        if (inputHandler.GetMeleeInputHeld()) {
+            Debug.Log("melee held");
+        }
+
+        if (inputHandler.GetMeleeInputUp()) {
+            Debug.Log("melee stopped");
+        }
+        */
+
+        if (inputHandler.GetInteractInputDown()) {
+            Debug.Log("interact pressed");
+        }
+
+        if (inputHandler.GetInteractInputHeld()) {
+            Debug.Log("interact held");
+        }
+
+        if (inputHandler.GetInteractInputUp()) {
+            Debug.Log("interact stopped");
+        }
     }
 
     void ShiftCamera() {

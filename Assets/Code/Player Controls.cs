@@ -27,12 +27,20 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Shoot"",
+                    ""name"": ""PressShoot"",
                     ""type"": ""Button"",
                     ""id"": ""67cadc42-636e-43e8-b1f9-07d03f8eba45"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Tap(duration=0.01)""
+                },
+                {
+                    ""name"": ""HoldShoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""eeafd8e4-129b-4d72-b12a-abd6b4b50d68"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 },
                 {
                     ""name"": ""Rotate"",
@@ -41,6 +49,38 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""PressMelee"",
+                    ""type"": ""Button"",
+                    ""id"": ""80600e41-30ce-4267-a743-3f6cae766c9d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap(duration=0.02)""
+                },
+                {
+                    ""name"": ""HoldMelee"",
+                    ""type"": ""Button"",
+                    ""id"": ""d9b3c995-9a30-433f-8d2a-62f3a2cd07fd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""PressInteract"",
+                    ""type"": ""Button"",
+                    ""id"": ""070b76f7-60b0-411c-94a7-de81c57450f4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap(duration=0.01)""
+                },
+                {
+                    ""name"": ""HoldInteract"",
+                    ""type"": ""Button"",
+                    ""id"": ""e54a0f7b-f743-480d-a8e8-82674edd86a0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(pressPoint=0.5)""
                 }
             ],
             ""bindings"": [
@@ -128,7 +168,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""Shoot"",
+                    ""action"": ""PressShoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -139,7 +179,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard + mouse"",
-                    ""action"": ""Shoot"",
+                    ""action"": ""PressShoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -162,6 +202,116 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard + mouse"",
                     ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b62049f-215c-4497-aec5-483059cc79df"",
+                    ""path"": ""<Mouse>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + mouse"",
+                    ""action"": ""HoldShoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a36fa45-de89-47cb-aaf9-e49d0515e3b3"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""HoldShoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d88dd913-abe5-4de3-86f4-df6fbf4b835c"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + mouse"",
+                    ""action"": ""PressMelee"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6524a855-438c-4c8c-9269-ca36e13c2bd2"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""PressMelee"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""030d1b05-006d-48af-a449-04169319460b"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + mouse"",
+                    ""action"": ""HoldMelee"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6636d0b2-644b-4a28-ac48-011aaddd2e98"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""HoldMelee"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d90337f-4cf4-47bc-9709-815cf7c5f2ab"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""PressInteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9465b682-7c78-430d-8953-90ac58749505"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + mouse"",
+                    ""action"": ""PressInteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""071cd0bd-81d5-4fde-b32d-eb9123660b00"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + mouse"",
+                    ""action"": ""HoldInteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9c830bd-e1e2-4a0f-a817-851309f655b9"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""HoldInteract"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -206,8 +356,13 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
-        m_Gameplay_Shoot = m_Gameplay.FindAction("Shoot", throwIfNotFound: true);
+        m_Gameplay_PressShoot = m_Gameplay.FindAction("PressShoot", throwIfNotFound: true);
+        m_Gameplay_HoldShoot = m_Gameplay.FindAction("HoldShoot", throwIfNotFound: true);
         m_Gameplay_Rotate = m_Gameplay.FindAction("Rotate", throwIfNotFound: true);
+        m_Gameplay_PressMelee = m_Gameplay.FindAction("PressMelee", throwIfNotFound: true);
+        m_Gameplay_HoldMelee = m_Gameplay.FindAction("HoldMelee", throwIfNotFound: true);
+        m_Gameplay_PressInteract = m_Gameplay.FindAction("PressInteract", throwIfNotFound: true);
+        m_Gameplay_HoldInteract = m_Gameplay.FindAction("HoldInteract", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -258,15 +413,25 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Move;
-    private readonly InputAction m_Gameplay_Shoot;
+    private readonly InputAction m_Gameplay_PressShoot;
+    private readonly InputAction m_Gameplay_HoldShoot;
     private readonly InputAction m_Gameplay_Rotate;
+    private readonly InputAction m_Gameplay_PressMelee;
+    private readonly InputAction m_Gameplay_HoldMelee;
+    private readonly InputAction m_Gameplay_PressInteract;
+    private readonly InputAction m_Gameplay_HoldInteract;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
         public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
-        public InputAction @Shoot => m_Wrapper.m_Gameplay_Shoot;
+        public InputAction @PressShoot => m_Wrapper.m_Gameplay_PressShoot;
+        public InputAction @HoldShoot => m_Wrapper.m_Gameplay_HoldShoot;
         public InputAction @Rotate => m_Wrapper.m_Gameplay_Rotate;
+        public InputAction @PressMelee => m_Wrapper.m_Gameplay_PressMelee;
+        public InputAction @HoldMelee => m_Wrapper.m_Gameplay_HoldMelee;
+        public InputAction @PressInteract => m_Wrapper.m_Gameplay_PressInteract;
+        public InputAction @HoldInteract => m_Wrapper.m_Gameplay_HoldInteract;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -279,12 +444,27 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
-                @Shoot.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
-                @Shoot.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
-                @Shoot.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
+                @PressShoot.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPressShoot;
+                @PressShoot.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPressShoot;
+                @PressShoot.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPressShoot;
+                @HoldShoot.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldShoot;
+                @HoldShoot.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldShoot;
+                @HoldShoot.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldShoot;
                 @Rotate.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotate;
                 @Rotate.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotate;
                 @Rotate.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotate;
+                @PressMelee.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPressMelee;
+                @PressMelee.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPressMelee;
+                @PressMelee.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPressMelee;
+                @HoldMelee.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldMelee;
+                @HoldMelee.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldMelee;
+                @HoldMelee.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldMelee;
+                @PressInteract.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPressInteract;
+                @PressInteract.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPressInteract;
+                @PressInteract.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPressInteract;
+                @HoldInteract.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldInteract;
+                @HoldInteract.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldInteract;
+                @HoldInteract.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldInteract;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -292,12 +472,27 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Shoot.started += instance.OnShoot;
-                @Shoot.performed += instance.OnShoot;
-                @Shoot.canceled += instance.OnShoot;
+                @PressShoot.started += instance.OnPressShoot;
+                @PressShoot.performed += instance.OnPressShoot;
+                @PressShoot.canceled += instance.OnPressShoot;
+                @HoldShoot.started += instance.OnHoldShoot;
+                @HoldShoot.performed += instance.OnHoldShoot;
+                @HoldShoot.canceled += instance.OnHoldShoot;
                 @Rotate.started += instance.OnRotate;
                 @Rotate.performed += instance.OnRotate;
                 @Rotate.canceled += instance.OnRotate;
+                @PressMelee.started += instance.OnPressMelee;
+                @PressMelee.performed += instance.OnPressMelee;
+                @PressMelee.canceled += instance.OnPressMelee;
+                @HoldMelee.started += instance.OnHoldMelee;
+                @HoldMelee.performed += instance.OnHoldMelee;
+                @HoldMelee.canceled += instance.OnHoldMelee;
+                @PressInteract.started += instance.OnPressInteract;
+                @PressInteract.performed += instance.OnPressInteract;
+                @PressInteract.canceled += instance.OnPressInteract;
+                @HoldInteract.started += instance.OnHoldInteract;
+                @HoldInteract.performed += instance.OnHoldInteract;
+                @HoldInteract.canceled += instance.OnHoldInteract;
             }
         }
     }
@@ -332,7 +527,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     public interface IGameplayActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnShoot(InputAction.CallbackContext context);
+        void OnPressShoot(InputAction.CallbackContext context);
+        void OnHoldShoot(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
+        void OnPressMelee(InputAction.CallbackContext context);
+        void OnHoldMelee(InputAction.CallbackContext context);
+        void OnPressInteract(InputAction.CallbackContext context);
+        void OnHoldInteract(InputAction.CallbackContext context);
     }
 }

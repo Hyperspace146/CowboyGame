@@ -14,12 +14,20 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Shoot",
+                    "name": "PressShoot",
                     "type": "Button",
                     "id": "67cadc42-636e-43e8-b1f9-07d03f8eba45",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Tap(duration=0.01)"
+                },
+                {
+                    "name": "HoldShoot",
+                    "type": "Button",
+                    "id": "eeafd8e4-129b-4d72-b12a-abd6b4b50d68",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 },
                 {
                     "name": "Rotate",
@@ -28,6 +36,38 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "PressMelee",
+                    "type": "Button",
+                    "id": "80600e41-30ce-4267-a743-3f6cae766c9d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap(duration=0.02)"
+                },
+                {
+                    "name": "HoldMelee",
+                    "type": "Button",
+                    "id": "d9b3c995-9a30-433f-8d2a-62f3a2cd07fd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "PressInteract",
+                    "type": "Button",
+                    "id": "070b76f7-60b0-411c-94a7-de81c57450f4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap(duration=0.01)"
+                },
+                {
+                    "name": "HoldInteract",
+                    "type": "Button",
+                    "id": "e54a0f7b-f743-480d-a8e8-82674edd86a0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(pressPoint=0.5)"
                 }
             ],
             "bindings": [
@@ -115,7 +155,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "Shoot",
+                    "action": "PressShoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -126,7 +166,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard + mouse",
-                    "action": "Shoot",
+                    "action": "PressShoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -149,6 +189,116 @@
                     "processors": "",
                     "groups": "Keyboard + mouse",
                     "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9b62049f-215c-4497-aec5-483059cc79df",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard + mouse",
+                    "action": "HoldShoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8a36fa45-de89-47cb-aaf9-e49d0515e3b3",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "HoldShoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d88dd913-abe5-4de3-86f4-df6fbf4b835c",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard + mouse",
+                    "action": "PressMelee",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6524a855-438c-4c8c-9269-ca36e13c2bd2",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "PressMelee",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "030d1b05-006d-48af-a449-04169319460b",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard + mouse",
+                    "action": "HoldMelee",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6636d0b2-644b-4a28-ac48-011aaddd2e98",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "HoldMelee",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4d90337f-4cf4-47bc-9709-815cf7c5f2ab",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "PressInteract",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9465b682-7c78-430d-8953-90ac58749505",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard + mouse",
+                    "action": "PressInteract",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "071cd0bd-81d5-4fde-b32d-eb9123660b00",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard + mouse",
+                    "action": "HoldInteract",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f9c830bd-e1e2-4a0f-a817-851309f655b9",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "HoldInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
