@@ -6,9 +6,9 @@ public class Health : MonoBehaviour
 {
     public int BaseMaxHealth;
 
-    public int maxHealth;      // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
-    public int health;         // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
-    public bool isDead;        // ONLY TEMPORARILY PUBLIC FOR DEBUGGING PURPOSES, REMEMBER TO TURN OFF
+    private int maxHealth;      
+    private int health;         
+    private bool isDead;        
     RespawnManager respawnManager;
     SpriteRenderer spriteRenderer;  // temp
 
@@ -63,16 +63,6 @@ public class Health : MonoBehaviour
         else
         {
             Destroy(this.gameObject);
-        }
-    }
-
-    // TEMP
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ChangeHealth(-10);
-            Debug.Log(health);
         }
     }
 }
