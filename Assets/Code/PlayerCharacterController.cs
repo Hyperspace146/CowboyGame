@@ -113,8 +113,8 @@ public class PlayerCharacterController : MonoBehaviour {
     }
     
     void HandleCharacterMovement() {
-        Debug.Log(inputHandler);
-        displacement = playerStats.speed * moveSpeedMultiplier * inputHandler.GetMoveInput();
+        
+        displacement = /*playerStats.speed*/ 10f * moveSpeedMultiplier * inputHandler.GetMoveInput();
         crosshairPos = crosshairScript.GetCrosshairPos();
     }
 
