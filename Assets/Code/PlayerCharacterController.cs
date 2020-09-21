@@ -80,16 +80,16 @@ public class PlayerCharacterController : MonoBehaviour {
         }
         */
 
-        if (inputHandler.GetInteractInputDown()) {
-            Debug.Log("interact pressed");
+        if (inputHandler.GetRollInputDown()) {
+            Debug.Log("roll pressed");
         }
 
-        if (inputHandler.GetInteractInputHeld()) {
-            Debug.Log("interact held");
+        if (inputHandler.GetRollInputHeld()) {
+            Debug.Log("roll held");
         }
 
-        if (inputHandler.GetInteractInputUp()) {
-            Debug.Log("interact stopped");
+        if (inputHandler.GetRollInputUp()) {
+            Debug.Log("roll stopped");
         }
     }
 

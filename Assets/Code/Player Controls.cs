@@ -81,6 +81,22 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(pressPoint=0.5)""
+                },
+                {
+                    ""name"": ""PressRoll"",
+                    ""type"": ""Button"",
+                    ""id"": ""008cbedf-db60-48cd-a574-6d96e24101ca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap(duration=0.01)""
+                },
+                {
+                    ""name"": ""HoldRoll"",
+                    ""type"": ""Button"",
+                    ""id"": ""b7fc3412-8ccc-4441-9452-9f6eecee3bba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -314,6 +330,50 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""HoldInteract"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59033a47-2ec8-4694-9b3b-7f22a05c1eac"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""PressRoll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cf7a28d3-b212-4d6d-ac46-54fbcc996664"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + mouse"",
+                    ""action"": ""PressRoll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b0dab6c-f6dc-46f7-9113-bd9f1b9e4caf"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + mouse"",
+                    ""action"": ""HoldRoll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03a0c9f3-dfde-4398-b0a9-3f6cc03b49a9"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""HoldRoll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -363,6 +423,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_HoldMelee = m_Gameplay.FindAction("HoldMelee", throwIfNotFound: true);
         m_Gameplay_PressInteract = m_Gameplay.FindAction("PressInteract", throwIfNotFound: true);
         m_Gameplay_HoldInteract = m_Gameplay.FindAction("HoldInteract", throwIfNotFound: true);
+        m_Gameplay_PressRoll = m_Gameplay.FindAction("PressRoll", throwIfNotFound: true);
+        m_Gameplay_HoldRoll = m_Gameplay.FindAction("HoldRoll", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -420,6 +482,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_HoldMelee;
     private readonly InputAction m_Gameplay_PressInteract;
     private readonly InputAction m_Gameplay_HoldInteract;
+    private readonly InputAction m_Gameplay_PressRoll;
+    private readonly InputAction m_Gameplay_HoldRoll;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -432,6 +496,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @HoldMelee => m_Wrapper.m_Gameplay_HoldMelee;
         public InputAction @PressInteract => m_Wrapper.m_Gameplay_PressInteract;
         public InputAction @HoldInteract => m_Wrapper.m_Gameplay_HoldInteract;
+        public InputAction @PressRoll => m_Wrapper.m_Gameplay_PressRoll;
+        public InputAction @HoldRoll => m_Wrapper.m_Gameplay_HoldRoll;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -465,6 +531,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @HoldInteract.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldInteract;
                 @HoldInteract.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldInteract;
                 @HoldInteract.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldInteract;
+                @PressRoll.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPressRoll;
+                @PressRoll.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPressRoll;
+                @PressRoll.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPressRoll;
+                @HoldRoll.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldRoll;
+                @HoldRoll.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldRoll;
+                @HoldRoll.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldRoll;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -493,6 +565,12 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @HoldInteract.started += instance.OnHoldInteract;
                 @HoldInteract.performed += instance.OnHoldInteract;
                 @HoldInteract.canceled += instance.OnHoldInteract;
+                @PressRoll.started += instance.OnPressRoll;
+                @PressRoll.performed += instance.OnPressRoll;
+                @PressRoll.canceled += instance.OnPressRoll;
+                @HoldRoll.started += instance.OnHoldRoll;
+                @HoldRoll.performed += instance.OnHoldRoll;
+                @HoldRoll.canceled += instance.OnHoldRoll;
             }
         }
     }
@@ -534,5 +612,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnHoldMelee(InputAction.CallbackContext context);
         void OnPressInteract(InputAction.CallbackContext context);
         void OnHoldInteract(InputAction.CallbackContext context);
+        void OnPressRoll(InputAction.CallbackContext context);
+        void OnHoldRoll(InputAction.CallbackContext context);
     }
 }

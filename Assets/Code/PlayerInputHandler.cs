@@ -20,6 +20,9 @@ public class PlayerInputHandler : MonoBehaviour {
     private bool interactPressed;
     private bool interactHeld;
 
+    private bool rollPressed;
+    private bool rollHeld;
+
     //PlayerInputHandler - handles inputs and applies things like sensitivity, invert, etc. 
     //***these methods will be called within an update() method of another class
 
@@ -136,9 +139,22 @@ public class PlayerInputHandler : MonoBehaviour {
    }
 
    private void DetectRollInput() {
+        controls.Gameplay.PressRoll.started += context => rollPressed = true;
+        controls.Gameplay.HoldRoll.performed += context => rollHeld = true;
+        controls.Gameplay.HoldRoll.canceled += context => rollHeld = false;
+        controls.Gameplay.PressRoll.canceled += context => rollPressed = false;
+   }
 
+   public bool GetRollInputDown() {
+       return rollPressed;
+   }
 
+   public bool GetRollInputHeld() {
+       return rollHeld;
+   }
 
+   public bool GetRollInputUp() {
+       return !rollPressed && !rollHeld;
    }
 
 
