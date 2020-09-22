@@ -35,11 +35,13 @@ public class Pickup : MonoBehaviour
     {
         Health playerHealth = collision.GetComponent<Health>();
         PlayerStats playerStats = collision.GetComponent<PlayerStats>();
+        PlayerInputHandler playerInput = collision.GetComponent<PlayerInputHandler>();
+
+        if (playerInput.GetInteractInputDown()) { Debug.Log("int down"); }
 
         // Check for Interact button input and player scripts
-        if (playerHealth != null && playerStats != null /*&& player.GetComponent<PlayerInputHandler>().GetInteractInputDown())*/)
+        if (playerHealth != null && playerStats != null && playerInput != null && playerInput.GetInteractInputDown())
         {
-            // TODO: change outline color
             // Apply all stat/health changes if non-zero
             if (MaxHealthBuff != 0)
             {

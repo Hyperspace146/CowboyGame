@@ -38,7 +38,7 @@ public class PlayerWeaponManager : MonoBehaviour
         }
 
         //add ReloadWeapon() to inputhandler
-        if (inputHandler.GetReloadInputDown())
+        if (inputHandler.GetReloadWeaponHeldDown())
         {
             ReloadWeapon();
         }
@@ -50,29 +50,33 @@ public class PlayerWeaponManager : MonoBehaviour
     void TryShoot()
     {
 
-        // Check if able to shoot
+        // Shoot if able to (not reloading, has ammo, and has waited the delay between shots)
         if (!IsReloading && CurrentAmmo > 0 && lastTimeShot + DelayBetweenShots < Time.time)
         {
-            // decrease ammo and shoot
+            // Decrease ammo by the amount of projectiles shot
+            CurrentAmmo -= 1;
+
             // For now, projectiles shoot straight forward, no spread yet
             Vector2 shootDirection = inputHandler.GetLookInput();
-            GameObject projectile = Instantiate(ProjectilePrefab, ShootPoint.position, Quaternion.LookRotation(shootDirection, Vector2.up),
+            GameObject projectile = Instantiate(ProjectilePrefab, ShootPoint.position, transform.rotation,
                     this.gameObject.transform);
-            // Give velocity to the projectile
-            projectile.GetComponent<Rigidbody2D>().AddForce(shootDirection, ForceMode2D.Impulse);
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), projectile.GetComponent<Collider2D>());
 
-            // invoke OnShoot
+            // Give velocity to the projectile
+            projectile.GetComponent<Rigidbody2D>().velocity = shootDirection * BulletSpeed;
+
+            // Invoke OnShoot for any additional events/effects we want to happen
             if (OnShoot != null)
             {
                 OnShoot.Invoke();
             }
 
+            // Update last time shot to now
+            lastTimeShot = Time.time;
         }
 
     }
-
-
-
+    
 
     //I think this should be a coroutine
     void ReloadWeapon()
