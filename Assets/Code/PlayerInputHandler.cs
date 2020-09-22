@@ -23,6 +23,8 @@ public class PlayerInputHandler : MonoBehaviour {
     private bool rollPressed;
     private bool rollHeld;
 
+    private bool ReloadPressed;
+
     //PlayerInputHandler - handles inputs and applies things like sensitivity, invert, etc. 
     //***these methods will be called within an update() method of another class
 
@@ -49,7 +51,6 @@ public class PlayerInputHandler : MonoBehaviour {
     //this method is responsible for updating our move and rotate values according to input
     private void DetectInput() {
        
-                                                       
 
         DetectMoveInput();
         DetectCrosshairInput();
@@ -155,6 +156,17 @@ public class PlayerInputHandler : MonoBehaviour {
 
    public bool GetRollInputUp() {
        return !rollPressed && !rollHeld;
+   }
+
+   private void DetectReload() {
+        
+        controls.Gameplay.HoldReload.performed += context => ReloadPressed = true;
+        controls.Gameplay.HoldReload.canceled += context => ReloadPressed = false;
+
+   }
+
+   public bool GetReloadWeaponHeldDown() {
+       return ReloadPressed;
    }
 
 

@@ -97,6 +97,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""HoldReload"",
+                    ""type"": ""Button"",
+                    ""id"": ""fa19166d-7e65-468c-8d59-41a0cc0ba47c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -374,6 +382,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""HoldRoll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea6226b4-04db-4ca3-9618-f990ca19bbb9"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + mouse"",
+                    ""action"": ""HoldReload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c3d9bd5-1859-42af-b9d6-096d8560f30f"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""HoldReload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -425,6 +455,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Gameplay_HoldInteract = m_Gameplay.FindAction("HoldInteract", throwIfNotFound: true);
         m_Gameplay_PressRoll = m_Gameplay.FindAction("PressRoll", throwIfNotFound: true);
         m_Gameplay_HoldRoll = m_Gameplay.FindAction("HoldRoll", throwIfNotFound: true);
+        m_Gameplay_HoldReload = m_Gameplay.FindAction("HoldReload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -484,6 +515,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_HoldInteract;
     private readonly InputAction m_Gameplay_PressRoll;
     private readonly InputAction m_Gameplay_HoldRoll;
+    private readonly InputAction m_Gameplay_HoldReload;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -498,6 +530,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @HoldInteract => m_Wrapper.m_Gameplay_HoldInteract;
         public InputAction @PressRoll => m_Wrapper.m_Gameplay_PressRoll;
         public InputAction @HoldRoll => m_Wrapper.m_Gameplay_HoldRoll;
+        public InputAction @HoldReload => m_Wrapper.m_Gameplay_HoldReload;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -537,6 +570,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @HoldRoll.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldRoll;
                 @HoldRoll.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldRoll;
                 @HoldRoll.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldRoll;
+                @HoldReload.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldReload;
+                @HoldReload.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldReload;
+                @HoldReload.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHoldReload;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -571,6 +607,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @HoldRoll.started += instance.OnHoldRoll;
                 @HoldRoll.performed += instance.OnHoldRoll;
                 @HoldRoll.canceled += instance.OnHoldRoll;
+                @HoldReload.started += instance.OnHoldReload;
+                @HoldReload.performed += instance.OnHoldReload;
+                @HoldReload.canceled += instance.OnHoldReload;
             }
         }
     }
@@ -614,5 +653,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnHoldInteract(InputAction.CallbackContext context);
         void OnPressRoll(InputAction.CallbackContext context);
         void OnHoldRoll(InputAction.CallbackContext context);
+        void OnHoldReload(InputAction.CallbackContext context);
     }
 }
