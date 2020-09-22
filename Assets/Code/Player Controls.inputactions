@@ -84,6 +84,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press"
+                },
+                {
+                    "name": "HoldReload",
+                    "type": "Button",
+                    "id": "fa19166d-7e65-468c-8d59-41a0cc0ba47c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -359,6 +367,28 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "HoldRoll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ea6226b4-04db-4ca3-9618-f990ca19bbb9",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard + mouse",
+                    "action": "HoldReload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c3d9bd5-1859-42af-b9d6-096d8560f30f",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "HoldReload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

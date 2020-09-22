@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(PlayerInputHandler)]
+[RequireComponent(typeof(PlayerInputHandler))]
 public class PlayerWeaponManager : MonoBehaviour
 {
     public float ReloadTime;
@@ -16,8 +16,7 @@ public class PlayerWeaponManager : MonoBehaviour
     public float ProjectileSpreadAngle;
 
     public UnityAction OnShoot;
-
-
+    
     private PlayerInputHandler inputHandler;
     private float lastTimeShot;
     private bool IsReloading;
@@ -25,6 +24,7 @@ public class PlayerWeaponManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CurrentAmmo = AmmoPoolSize; //automatically set player's ammo as full at the start
         inputHandler = GetComponent<PlayerInputHandler>();
     }
 
@@ -93,17 +93,5 @@ public class PlayerWeaponManager : MonoBehaviour
 
 
     }
-
-
-
-
-
-
-
-
-
-
-    //butt 
-    //poop
 
 }

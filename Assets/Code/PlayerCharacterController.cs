@@ -20,7 +20,15 @@ public class PlayerCharacterController : MonoBehaviour {
     private GameObject crosshair;
     private Crosshair crosshairScript;
 
+    public float RollInvulnerabilityTime; //time that player is invulnerable while rolling
+    public float RollCooldownTime;
+    private float TimeOfLastRoll;
+    private bool RollAvailable;
+
+
     void Start() {
+
+        RollAvailable = true;
         //store the player's playerinputhandler script here
         //so that we have access to its methods
  
@@ -28,10 +36,8 @@ public class PlayerCharacterController : MonoBehaviour {
         playerStats = GetComponent<PlayerStats>();
         crosshair = GameObject.FindWithTag("Crosshair");
         crosshairScript = crosshair.GetComponent<Crosshair>();
-        if (crosshairScript == null)
-        {
-            Debug.Log("null");
-        }
+        
+
     }
 
     /*
@@ -45,12 +51,45 @@ public class PlayerCharacterController : MonoBehaviour {
         //HandleCharacterActions();
         HandleCharacterMovement();
 
-        TestInputCommands();
+        HandleCharacterActions();
+
+        //TestInputCommands();
        
 
 
 
     }
+
+    void HandleCharacterActions() {
+
+        
+        RollAvailable = (Time.time - TimeOfLastRoll) > RollCooldownTime;
+
+        if (inputHandler.GetRollInputDown() && RollAvailable) {
+            
+            StartCoroutine(BecomeInvulnerableForTime(RollInvulnerabilityTime));
+
+        }
+
+
+    }
+
+
+    //coroutine - become invulnerable for an amount of time
+    //also sets player back to being vulnerable once time is over
+    IEnumerator BecomeInvulnerableForTime(float time) {
+
+        //****NOTE: NEED PLAYER AND OBJECTS THAT THE PLAYER IS INVULNERABLE FROM TO HAVE LAYERS(SET IN UNITY INSPECTOR)
+        Physics2D.IgnoreLayerCollision(8, 9, true); //set player invulnerable to bullets/enemy-fire
+
+        yield return new WaitForSeconds(time);
+        
+        //set player back to being invulnerable
+        Physics2D.IgnoreLayerCollision(8, 9, true); //set player back to being vulnerable to bullets/enemy-fire
+
+
+    }
+
 
     private void TestInputCommands() {
          
@@ -92,6 +131,13 @@ public class PlayerCharacterController : MonoBehaviour {
             Debug.Log("roll stopped");
         }
     }
+
+    void MakePlayerInvulnerable(float vulnerabilityTime) {
+
+
+
+    }
+
 
     void ShiftCamera() {
         //have the camera follow the player
