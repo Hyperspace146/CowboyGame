@@ -282,6 +282,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Juda Stuff
       objectReference: {fileID: 0}
+    - target: {fileID: 1355469459508176617, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: RollInvulnerabilityTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355469459508176617, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: RollCooldownTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355469459508176617, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: PlayerControlEnabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1949588609828155354, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.15478265
@@ -342,6 +354,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5825601743729862455, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7908953728749194837, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
       propertyPath: m_LocalPosition.z
       value: -20
@@ -349,6 +365,14 @@ PrefabInstance:
     - target: {fileID: 8140796496448392259, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
       propertyPath: m_LocalPosition.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8620538953091482862, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8620538953091482862, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}

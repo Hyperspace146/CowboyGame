@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour {
 
-
     //we need an instance of the input system asset that we made
     PlayerControls controls;
     Vector2 move;
@@ -51,13 +50,11 @@ public class PlayerInputHandler : MonoBehaviour {
     //this method is responsible for updating our move and rotate values according to input
     private void DetectInput() {
        
-
         DetectMoveInput();
         DetectCrosshairInput();
         DetectShootInput();
         DetectInteractInput();
         DetectRollInput();
-
 
    }
 

@@ -10,11 +10,11 @@ public class PlayerWeaponManager : MonoBehaviour
     public int CurrentAmmo;
     public float DelayBetweenShots;
     public float BulletSpeed;
-    public GameObejct ProjectilePrefab;
+    public GameObject ProjectilePrefab;
     public Transform ShootPoint;
     public float ProjectileSpreadAngle;
     
-    public UnityAction OnShoot;
+    //public UnityAction OnShoot;
    
     private PlayerInputHandler inputHandler;
     private float lastTimeShot;
@@ -31,12 +31,12 @@ public class PlayerWeaponManager : MonoBehaviour
     void Update()
     {
     
-    	if (inputHandler.GetFireHeldDown()) {
-      	    TryShoot();
+    	if (inputHandler.GetFireInputHeld()) {
+      	   // TryShoot();
         }
       
         //The "!IsReloading" makes sure that the coroutine doesn't happen multiple times during a reload 
-        if (!IsReloading && (inputHandler.ReloadWeaponHeldDown() || currentAmmo <= 0)) {
+        if (!IsReloading && (inputHandler.GetReloadWeaponHeldDown() || CurrentAmmo <= 0)) {
             StartCoroutine(ReloadWeapon());
             IsReloading = true;
         }
@@ -44,7 +44,7 @@ public class PlayerWeaponManager : MonoBehaviour
     
         
     }
-    
+    /*
     void TryShoot() 
     {
     
@@ -68,7 +68,7 @@ public class PlayerWeaponManager : MonoBehaviour
     
     }
     
-    
+    */
     
     
     //"IEnumerator" indicates that this function is a coroutin

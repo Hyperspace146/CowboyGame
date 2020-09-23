@@ -25,10 +25,16 @@ public class PlayerCharacterController : MonoBehaviour {
     private float TimeOfLastRoll;
     private bool RollAvailable;
 
+    public bool PlayerControlEnabled;
 
     void Start() {
 
-        RollAvailable = true;
+        RollInvulnerabilityTime = 5f;
+        RollCooldownTime = 5f;
+        Debug.Log(RollCooldownTime + " " + RollInvulnerabilityTime);
+        
+        PlayerControlEnabled = true;
+        TimeOfLastRoll = float.NegativeInfinity; //this is so we have a roll available from the start
         //store the player's playerinputhandler script here
         //so that we have access to its methods
  
@@ -40,6 +46,10 @@ public class PlayerCharacterController : MonoBehaviour {
 
     }
 
+    public void DisableCharacterControl() {
+        PlayerControlEnabled = false;
+    }
+
     /*
     PlayerCharacterController - handles movement using the info from PlayerInputHandler
     has a field that disables/enables player control (for during cutscenes and stuff) 
@@ -48,27 +58,29 @@ public class PlayerCharacterController : MonoBehaviour {
 
     //input
     void Update() {
-        //HandleCharacterActions();
-        HandleCharacterMovement();
-
-        HandleCharacterActions();
+        
+        if (PlayerControlEnabled) {
+            HandleCharacterMovement();
+            HandleCharacterActions();
+        }
 
         //TestInputCommands();
        
-
-
-
     }
 
     void HandleCharacterActions() {
-
         
+        //roll
         RollAvailable = (Time.time - TimeOfLastRoll) > RollCooldownTime;
-
+        //Debug.Log("curr time: " + Time.time + ", TimeOfLastRoll: " + TimeOfLastRoll + " RollCooldownTime: " + RollCooldownTime);
         if (inputHandler.GetRollInputDown() && RollAvailable) {
-            
-            StartCoroutine(BecomeInvulnerableForTime(RollInvulnerabilityTime));
+            TimeOfLastRoll = Time.time;
 
+            //thrust player forward physically
+            rb.AddForce(inputHandler.GetMoveInput() * 5000, ForceMode2D.Force);
+
+
+            StartCoroutine(BecomeInvulnerableForTime());
         }
 
 
@@ -77,22 +89,22 @@ public class PlayerCharacterController : MonoBehaviour {
 
     //coroutine - become invulnerable for an amount of time
     //also sets player back to being vulnerable once time is over
-    IEnumerator BecomeInvulnerableForTime(float time) {
+    IEnumerator BecomeInvulnerableForTime() {
 
         //****NOTE: NEED PLAYER AND OBJECTS THAT THE PLAYER IS INVULNERABLE FROM TO HAVE LAYERS(SET IN UNITY INSPECTOR)
         Physics2D.IgnoreLayerCollision(8, 9, true); //set player invulnerable to bullets/enemy-fire
-
-        yield return new WaitForSeconds(time);
-        
+        Debug.Log("Player is now invulnerable");
+        yield return new WaitForSeconds(RollInvulnerabilityTime);
+        Debug.Log("Player is vulnerable again");
         //set player back to being invulnerable
         Physics2D.IgnoreLayerCollision(8, 9, true); //set player back to being vulnerable to bullets/enemy-fire
-
 
     }
 
 
     private void TestInputCommands() {
          
+         /*
         if (inputHandler.GetFireInputDown()) {
             Debug.Log("fire pressed");
         }
@@ -104,7 +116,7 @@ public class PlayerCharacterController : MonoBehaviour {
         if (inputHandler.GetFireInputUp()) {
             Debug.Log("fire stopped");
         }
-        
+        */
 /*
         if (inputHandler.GetMeleeInputDown()) {
             Debug.Log("melee pressed");
@@ -130,12 +142,6 @@ public class PlayerCharacterController : MonoBehaviour {
         if (inputHandler.GetRollInputUp()) {
             Debug.Log("roll stopped");
         }
-    }
-
-    void MakePlayerInvulnerable(float vulnerabilityTime) {
-
-
-
     }
 
 
@@ -171,48 +177,11 @@ public class PlayerCharacterController : MonoBehaviour {
         //still a lil' confused by Time.fixedDeltaTime, but I'll figure it out later
         rb.MovePosition(rb.position + displacement * Time.fixedDeltaTime);
 
-
         ShiftCamera();
 
     }
 
 
-/*
-    //checks if player chooses to do an action
-    //actions such as: shoot, melee, ability, interact
-    //if a player decides to do an action, a method from another class will be called
-    //ex: to fire, we'll call another function which will spawn a bullet
-    void HandleCharacterActions() {
-        
-        //These are just tests to make sure the methods work just the way we need them
-        if (inputHandler.GetFireInputHeld()) {
-            Debug.Log("fire button is held down");
-        } 
-        if (inputHandler.GetFireInputUp()) {
-            Debug.Log("Done shooting");
-        }
-
-    }
-*/
-    /* ***METHODS OF PLAYER INPUT HANDLER(a "- 1" means that the method has already been incorporated to this class)
-    Vector2 GetMoveInput(): returns the input axis for movement in Vector2 form - 1
-    float GetLookInput(): returns the value of the axis for looking/aiming (crosshair or controller stick) - 1
-    bool GetRollInputDown(): returns true when the roll button is initially pressed down
-    bool GetRollInputHeld(): returns true when the roll button is currently pressed down
-    bool GetRollInputUp(): returns true when the roll button is released
-    bool GetFireInputDown(): returns true when the shoot button is initially pressed down
-    bool GetFireInputHeld(): returns true when the shoot button is currently pressed down
-    bool GetFireInputUp(): returns true when the shoot button is released
-    bool GetMeleeInputDown(): returns true when the melee button is initially pressed down
-    bool GetMeleeInputHeld(): returns true when the melee button is currently pressed down
-    bool GetMeleeInputUp(): returns true when the melee button is released
-    bool GetAbilityInputDown(): returns true when the ability button is initially pressed down
-    bool GetAbilityInputHeld(): returns true when the ability button is currently pressed down
-    bool GetAbilityInputUp(): returns true when the ability button is released
-    bool GetInteractInputDown(): returns true when the interact button is initially pressed down
-    bool GetInteractInputHeld(): returns true when the interact button is currently pressed down
-    bool GetInteractInputUp(): returns true when the interact button is released
-    */
 
 
 
