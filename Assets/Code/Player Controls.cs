@@ -32,7 +32,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""id"": ""67cadc42-636e-43e8-b1f9-07d03f8eba45"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Tap(duration=0.01)""
+                    ""interactions"": ""Tap(duration=0.02)""
                 },
                 {
                     ""name"": ""HoldShoot"",
@@ -72,7 +72,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""id"": ""070b76f7-60b0-411c-94a7-de81c57450f4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Tap(duration=0.01)""
+                    ""interactions"": ""Tap(duration=0.02)""
                 },
                 {
                     ""name"": ""HoldInteract"",

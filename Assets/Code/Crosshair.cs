@@ -27,6 +27,10 @@ public class Crosshair : MonoBehaviour {
 
     }
 
+    void Update() {
+        Debug.Log(transform.position.z);
+    }
+
     public Vector2 GetCrosshairPos() {
         return rb.position;
     }

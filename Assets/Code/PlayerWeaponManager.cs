@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(PlayerInputHandler))]
 public class PlayerWeaponManager : MonoBehaviour
@@ -14,8 +15,11 @@ public class PlayerWeaponManager : MonoBehaviour
     public Transform ShootPoint;
     public float ProjectileSpreadAngle;
     
-    //public UnityAction OnShoot;
+  
    
+
+    public UnityAction OnShoot;
+    
     private PlayerInputHandler inputHandler;
     private float lastTimeShot;
     private bool IsReloading;
@@ -30,84 +34,82 @@ public class PlayerWeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
-    	if (inputHandler.GetFireInputHeld()) {
-      	   // TryShoot();
-        }
-      
+
         //The "!IsReloading" makes sure that the coroutine doesn't happen multiple times during a reload 
         if (!IsReloading && (inputHandler.GetReloadWeaponHeldDown() || CurrentAmmo <= 0)) {
             StartCoroutine(ReloadWeapon());
             IsReloading = true;
         }
-    
-    
-        
-    }
-    /*
-    void TryShoot() 
-    {
-    
-    	// Check if able to shoot
-    	if (!IsReloading && CurrentAmmo > 0 && lastTimeShot + DelayBetweenShots < Time.time) {
-      	// decrease ammo and shoot
-        // For now, projectiles shoot straight forward, no spread yet
-        Vector2 shootDirection = inputHandler.GetLookInput();
-        GameObject projectile = Instantiate(ProjectilePrefab, ShootPoint.position, Quaternion.LookRotation(shootDirection, Vector2.up), 
-        		this.gameObject.transform);
-        // Give velocity to the projectile
-        projectile.GetComponent<Rigidbody2D>().AddForce(shootDirection, ForceMode2D.Impulse);
-      
-      	// invoke OnShoot
-        if (OnShoot != null) 
+
+        if (inputHandler.GetFireInputHeld())
         {
-        	OnShoot.Invoke();
+            TryShoot();
         }
-        
-      }
-    
+
+
+
+
     }
     
-    */
+
+
+    void TryShoot()
+    {
+
+        // Shoot if able to (not reloading, has ammo, and has waited the delay between shots)
+        if (!IsReloading && CurrentAmmo > 0 && lastTimeShot + DelayBetweenShots < Time.time)
+        {
+            // Decrease ammo by the amount of projectiles shot
+            CurrentAmmo -= 1;
+
+            // For now, projectiles shoot straight forward, no spread yet
+            Vector2 shootDirection = inputHandler.GetLookInput();
+            GameObject projectile = Instantiate(ProjectilePrefab, ShootPoint.position, transform.rotation,
+                    this.gameObject.transform);
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), projectile.GetComponent<Collider2D>());
+
+            // Give velocity to the projectile
+            projectile.GetComponent<Rigidbody2D>().velocity = shootDirection * BulletSpeed;
+
+            // Invoke OnShoot for any additional events/effects we want to happen
+            if (OnShoot != null)
+            {
+                OnShoot.Invoke();
+            }
+
+            // Update last time shot to now
+            lastTimeShot = Time.time;
+        }
+
+    }
+    
+    
     
     
     //"IEnumerator" indicates that this function is a coroutin
     IEnumerator ReloadWeapon() 
     {
-    	
-        Debug.Log("Test to make sure reload function gets activated when needed");
-        
 
-        //***initiate reload animation somehow***
+        //initiate reload animation somehow***
 
-        //official coroutine code - function is paused for "Reload Time" amount
+        float TimeOfLastReload = Time.time;
+
+        //coroutine line
         yield return new WaitForSeconds(ReloadTime);
-        CurrentAmmo = AmmoPoolSize;
-        IsReloading = false; //reset to false once done reloading
 
-      
-        /* I think this code would also work
-    	float TimeOfLastReload = Time.time;
-        while (Time.time < TimeOfLastReload + ReloadTime) {
+
+        /* this code is probably also ok
+        while (Time.time < TimeOfLastReload + ReloadTime)
+        {
             IsReloading = true;
         }
+        */
+
         IsReloading = false;
-			*/
-      
-    
-    
+
+
+
+
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //butt 
-    //poop
-    
+
 }

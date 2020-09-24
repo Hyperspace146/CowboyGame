@@ -70,7 +70,7 @@ public class PlayerMelee : MonoBehaviour
         // TODO: make actionable
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
         // TODO: Maybe should use OnTriggerStay2D for consistent detection. Needs testing
 
@@ -82,5 +82,5 @@ public class PlayerMelee : MonoBehaviour
         {
             victimHealth.ChangeHealth(-Damage);
         }
-    }
+    }*/
 }

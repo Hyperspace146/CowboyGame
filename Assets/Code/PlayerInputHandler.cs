@@ -83,6 +83,7 @@ public class PlayerInputHandler : MonoBehaviour {
         controls.Gameplay.HoldShoot.performed += context => shootHeldDown = true;
         controls.Gameplay.HoldShoot.canceled += context => shootHeldDown = false;
         controls.Gameplay.PressShoot.canceled += context => shootPressed = false;
+
    }
 
    public bool GetFireInputDown() {
@@ -119,6 +120,7 @@ public class PlayerInputHandler : MonoBehaviour {
 
    private void DetectInteractInput() {
         controls.Gameplay.PressInteract.started += context => interactPressed = true;
+
         controls.Gameplay.HoldInteract.performed += context => interactHeld = true;
         controls.Gameplay.HoldInteract.canceled += context => interactHeld = false;
         controls.Gameplay.PressInteract.canceled += context => interactPressed = false;

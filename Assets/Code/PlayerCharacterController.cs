@@ -64,7 +64,7 @@ public class PlayerCharacterController : MonoBehaviour {
             HandleCharacterActions();
         }
 
-        //TestInputCommands();
+        TestInputCommands();
        
     }
 
@@ -104,7 +104,7 @@ public class PlayerCharacterController : MonoBehaviour {
 
     private void TestInputCommands() {
          
-         /*
+         
         if (inputHandler.GetFireInputDown()) {
             Debug.Log("fire pressed");
         }
@@ -116,7 +116,7 @@ public class PlayerCharacterController : MonoBehaviour {
         if (inputHandler.GetFireInputUp()) {
             Debug.Log("fire stopped");
         }
-        */
+        
 /*
         if (inputHandler.GetMeleeInputDown()) {
             Debug.Log("melee pressed");
@@ -129,7 +129,8 @@ public class PlayerCharacterController : MonoBehaviour {
         if (inputHandler.GetMeleeInputUp()) {
             Debug.Log("melee stopped");
         }
-        */
+        
+
 
         if (inputHandler.GetRollInputDown()) {
             Debug.Log("roll pressed");
@@ -141,6 +142,18 @@ public class PlayerCharacterController : MonoBehaviour {
 
         if (inputHandler.GetRollInputUp()) {
             Debug.Log("roll stopped");
+        }
+        */
+        if (inputHandler.GetInteractInputDown()) {
+            Debug.Log("interact pressed");
+        }
+
+        if (inputHandler.GetInteractInputHeld()) {
+            Debug.Log("interact held");
+        }
+
+        if (inputHandler.GetInteractInputUp()) {
+            Debug.Log("interact stopped");
         }
     }
 
