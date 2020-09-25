@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class Projectile : MonoBehaviour
 {
-    [Tooltip("Damage the projectile will deal")]
-    public int Damage;
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         Health victimHealth = collision.GetComponent<Health>();
         if (victimHealth != null)
         {
-            victimHealth.ChangeHealth(-Damage);
+            int damage = GetComponentInParent<PlayerWeaponManager>().Damage;
+            victimHealth.ChangeHealth(-damage);
         }
         Destroy(this.gameObject);
     }

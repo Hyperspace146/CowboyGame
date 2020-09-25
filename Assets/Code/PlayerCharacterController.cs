@@ -105,56 +105,67 @@ public class PlayerCharacterController : MonoBehaviour {
     private void TestInputCommands() {
          
          
-        /*if (inputHandler.GetFireInputDown()) {
+        if (inputHandler.GetFireInputDown()) {
             Debug.Log("fire pressed");
         }
 
-        if (inputHandler.GetFireInputHeld()) {
-            Debug.Log("fire held");
-        }
+        //if (inputHandler.GetFireInputHeld())
+        //{
+        //    Debug.Log("fire held");
+        //}
 
-        if (inputHandler.GetFireInputUp()) {
-            Debug.Log("fire stopped");
-        }
-        
-
-        if (inputHandler.GetMeleeInputDown()) {
-            Debug.Log("melee pressed");
-        }
-
-        if (inputHandler.GetMeleeInputHeld()) {
-            Debug.Log("melee held");
-        }
-
-        if (inputHandler.GetMeleeInputUp()) {
-            Debug.Log("melee stopped");
-        }
-        
+        //if (inputHandler.GetFireInputUp())
+        //{
+        //    Debug.Log("fire stopped");
+        //}
 
 
-        if (inputHandler.GetRollInputDown()) {
-            Debug.Log("roll pressed");
-        }
+        //if (inputHandler.GetMeleeInputDown())
+        //{
+        //    Debug.Log("melee pressed");
+        //}
 
-        if (inputHandler.GetRollInputHeld()) {
-            Debug.Log("roll held");
-        }
+        //if (inputHandler.GetMeleeInputHeld())
+        //{
+        //    Debug.Log("melee held");
+        //}
 
-        if (inputHandler.GetRollInputUp()) {
-            Debug.Log("roll stopped");
-        }
-        */
-        if (inputHandler.GetInteractInputDown()) {
-            Debug.Log("interact pressed");
-        }
+        //if (inputHandler.GetMeleeInputUp())
+        //{
+        //    Debug.Log("melee stopped");
+        //}
 
-        if (inputHandler.GetInteractInputHeld()) {
-            Debug.Log("interact held");
-        }
 
-        if (inputHandler.GetInteractInputUp()) {
-            //Debug.Log("interact stopped");
-        }
+
+        //if (inputHandler.GetRollInputDown())
+        //{
+        //    Debug.Log("roll pressed");
+        //}
+
+        //if (inputHandler.GetRollInputHeld())
+        //{
+        //    Debug.Log("roll held");
+        //}
+
+        //if (inputHandler.GetRollInputUp())
+        //{
+        //    Debug.Log("roll stopped");
+        //}
+
+        //if (inputHandler.GetInteractInputDown())
+        //{
+        //    Debug.Log("interact pressed");
+        //}
+
+        //if (inputHandler.GetInteractInputHeld())
+        //{
+        //    Debug.Log("interact held");
+        //}
+
+        //if (inputHandler.GetInteractInputUp())
+        //{
+        //    Debug.Log("interact stopped");
+        //}
     }
 
 

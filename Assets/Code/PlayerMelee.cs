@@ -27,20 +27,21 @@ public class PlayerMelee : MonoBehaviour
 
     void Update()
     {
-        //if (inputHandler.GetMeleeInputDown()) 
-        //{
-        //    MeleeAttack();
-        //}
+        if (inputHandler.GetMeleeInputDown()) 
+        {
+            MeleeAttack();
+        }
     }
 
     // Performs the melee attack by enabling the hitbox in the current look direction, all
-    // in accordance with the given startup, active, and recovery time.
+    // in accordance with the attack's given startup, active, and recovery time.
     void MeleeAttack()
     {
         StartCoroutine(MeleeAttackCoroutine());
     }
 
-    // Helper method that allows the melee attack to follow timings in seconds
+    // Helper method that allows the melee attack to follow startup, active, and recovery time
+    // in real-time seconds
     IEnumerator MeleeAttackCoroutine()
     {
         // TODO: make inactionable (to rolls, interact, shoot, anything but walk). In inputHandler?

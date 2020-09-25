@@ -37,8 +37,6 @@ public class Pickup : MonoBehaviour
         PlayerStats playerStats = collision.GetComponent<PlayerStats>();
         PlayerInputHandler playerInput = collision.GetComponent<PlayerInputHandler>();
 
-        if (playerInput.GetInteractInputDown()) { Debug.Log("int down"); }
-
         // Check for Interact button input and player scripts
         if (playerHealth != null && playerStats != null && playerInput != null && playerInput.GetInteractInputDown())
         {

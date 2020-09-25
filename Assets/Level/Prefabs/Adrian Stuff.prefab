@@ -383,13 +383,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReloadTime: 1
-  AmmoPoolSize: 5
-  CurrentAmmo: 100
+  ClipSize: 10
+  CurrentAmmo: 10
   DelayBetweenShots: 0.2
-  BulletSpeed: 20
+  ProjectileSpeed: 20
+  Damage: 10
+  TimeBeforeProjectileDespawns: 3
   ProjectilePrefab: {fileID: 4318480236218512917, guid: e7f8e28a762f3874fa88a71c3599bfab, type: 3}
   ShootPoint: {fileID: 7019539649025326925}
-  ProjectileSpreadAngle: 20
+  ProjectileSpreadAngle: 10
 --- !u!1 &7019539649457030661
 GameObject:
   m_ObjectHideFlags: 0

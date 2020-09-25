@@ -6,17 +6,30 @@ using UnityEngine.Events;
 [RequireComponent(typeof(PlayerInputHandler))]
 public class PlayerWeaponManager : MonoBehaviour
 {
+    [Tooltip("The time in seconds it takes to complete a full clip reload")]
     public float ReloadTime;
-    public int AmmoPoolSize;
+    [Tooltip("Max number of times the gun can be shot with one clip")]
+    public int ClipSize;
+    [Tooltip("The current amount of shots available in the current clip")]
     public int CurrentAmmo;
+    [Tooltip("The time in seconds that you must wait in before you can shoot again")]
     public float DelayBetweenShots;
-    public float BulletSpeed;
+    [Tooltip("Multiplier for the speed")]
+    public float ProjectileSpeed;
+    [Tooltip("How much damage the weapon's projectiles will do")]
+    public int Damage;
+    [Tooltip("The time in seconds before the projectile despawns")]
+    public float TimeBeforeProjectileDespawns;
+    [Tooltip("The projectile to be spawned")]
     public GameObject ProjectilePrefab;
+    [Tooltip("Where the projectiles will be shot from")]
     public Transform ShootPoint;
+    [Tooltip("The angle in degrees representing the total width of the weapon's inaccuracy spread")]
     public float ProjectileSpreadAngle;
 
     public UnityAction OnShoot;
-    
+    public UnityAction<GameObject> OnProjectileDespawn;
+
     private PlayerInputHandler inputHandler;
     private float lastTimeShot;
     private bool IsReloading;
@@ -24,14 +37,13 @@ public class PlayerWeaponManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CurrentAmmo = AmmoPoolSize; //automatically set player's ammo as full at the start
+        CurrentAmmo = ClipSize; //automatically set player's ammo as full at the start
         inputHandler = GetComponent<PlayerInputHandler>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         //The "!IsReloading" makes sure that the coroutine doesn't happen multiple times during a reload 
         if (!IsReloading && (inputHandler.GetReloadWeaponHeldDown() || CurrentAmmo <= 0)) {
             StartCoroutine(ReloadWeapon());
@@ -42,17 +54,11 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             TryShoot();
         }
-
-
-
-
     }
-    
 
 
     void TryShoot()
     {
-
         // Shoot if able to (not reloading, has ammo, and has waited the delay between shots)
         if (!IsReloading && CurrentAmmo > 0 && lastTimeShot + DelayBetweenShots < Time.time)
         {
@@ -63,14 +69,19 @@ public class PlayerWeaponManager : MonoBehaviour
             Vector2 shootDirection = GetShootDirectionWithinSpread();
             GameObject projectile = Instantiate(ProjectilePrefab, ShootPoint.position, transform.rotation,
                     this.gameObject.transform);
+
+            // Begin the coroutine to have the projectile despawn after given amount of time
+            StartCoroutine(DespawnProjectile(projectile));
+
+            // Have collisions ignored between the projectile and the player that shot it
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), projectile.GetComponent<Collider2D>());
 
-            Debug.DrawRay(ShootPoint.position, shootDirection, Color.red, 5, false);
+            //Debug.DrawRay(ShootPoint.position, shootDirection, Color.red, 5, false);
 
             // Give velocity to the projectile
-            projectile.GetComponent<Rigidbody2D>().velocity = shootDirection * BulletSpeed;
+            projectile.GetComponent<Rigidbody2D>().velocity = shootDirection * ProjectileSpeed;
 
-            // Invoke OnShoot for any additional events/effects we want to happen
+            // Invoke OnShoot for any additional events/effects we want to happen when we shoot
             if (OnShoot != null)
             {
                 OnShoot.Invoke();
@@ -79,9 +90,18 @@ public class PlayerWeaponManager : MonoBehaviour
             // Update last time shot to now
             lastTimeShot = Time.time;
         }
-
     }
 
+    // Despawns the given projectile after certain amount of time, and triggers any events that should happen on despawn
+    IEnumerator DespawnProjectile(GameObject projectile)
+    {
+        yield return new WaitForSeconds(TimeBeforeProjectileDespawns);
+        if (OnProjectileDespawn != null)
+        {
+            OnProjectileDespawn.Invoke(projectile);
+        }
+        Destroy(projectile);
+    }
 
     // Returns a random normalized vector towards the current aim direction but within the random 
     // projectile spread angle
@@ -104,12 +124,9 @@ public class PlayerWeaponManager : MonoBehaviour
     }
     
     
-    
-    
     //"IEnumerator" indicates that this function is a coroutine
     IEnumerator ReloadWeapon() 
     {
-
         //initiate reload animation somehow***
 
         float TimeOfLastReload = Time.time;
@@ -126,10 +143,6 @@ public class PlayerWeaponManager : MonoBehaviour
         */
 
         IsReloading = false;
-
-
-
-
     }
 
 }
