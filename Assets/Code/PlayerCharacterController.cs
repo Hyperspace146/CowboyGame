@@ -42,6 +42,9 @@ public class PlayerCharacterController : MonoBehaviour {
         playerStats = GetComponent<PlayerStats>();
         crosshair = GameObject.FindWithTag("Crosshair");
         crosshairScript = crosshair.GetComponent<Crosshair>();
+
+        //when the "InteractPressedOnInteractable" event is triggered, the interact method is initiated
+        Interactable.script.InteractableInRange += interact;
         
 
     }
@@ -49,6 +52,25 @@ public class PlayerCharacterController : MonoBehaviour {
     public void DisableCharacterControl() {
         PlayerControlEnabled = false;
     }
+
+    //listens for interact event(doesn't listen for interact input, listens for if there is an object nearby that 
+    //the player is trying to interact with)
+    //if event is triggered, this method is called
+    public void interact() {
+
+        //actually initiate the in-game event here
+        
+        Debug.Log("Interactable touched");
+
+
+        if (inputHandler.GetInteractInputHeld()) {
+
+            Debug.Log("Interactable interacted with");
+        }
+
+    }
+
+
 
     /*
     PlayerCharacterController - handles movement using the info from PlayerInputHandler
@@ -64,7 +86,7 @@ public class PlayerCharacterController : MonoBehaviour {
             HandleCharacterActions();
         }
 
-        TestInputCommands();
+        //TestInputCommands();
        
     }
 
@@ -77,10 +99,15 @@ public class PlayerCharacterController : MonoBehaviour {
             TimeOfLastRoll = Time.time;
 
             //thrust player forward physically
-            rb.AddForce(inputHandler.GetMoveInput() * 5000, ForceMode2D.Force);
-
-
+            rb.AddForce(inputHandler.GetMoveInput() * 2000, ForceMode2D.Force);
             StartCoroutine(BecomeInvulnerableForTime());
+        }
+
+        if (inputHandler.GetInteractInputHeld()) {
+
+
+            interact();
+
         }
 
 
