@@ -88,7 +88,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""id"": ""008cbedf-db60-48cd-a574-6d96e24101ca"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Tap(duration=0.01)""
+                    ""interactions"": ""Tap(duration=0.02)""
                 },
                 {
                     ""name"": ""HoldRoll"",
