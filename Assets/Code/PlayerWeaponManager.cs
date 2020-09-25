@@ -14,9 +14,6 @@ public class PlayerWeaponManager : MonoBehaviour
     public GameObject ProjectilePrefab;
     public Transform ShootPoint;
     public float ProjectileSpreadAngle;
-    
-  
-   
 
     public UnityAction OnShoot;
     
@@ -63,10 +60,12 @@ public class PlayerWeaponManager : MonoBehaviour
             CurrentAmmo -= 1;
 
             // For now, projectiles shoot straight forward, no spread yet
-            Vector2 shootDirection = inputHandler.GetLookInput();
+            Vector2 shootDirection = GetShootDirectionWithinSpread();
             GameObject projectile = Instantiate(ProjectilePrefab, ShootPoint.position, transform.rotation,
                     this.gameObject.transform);
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), projectile.GetComponent<Collider2D>());
+
+            Debug.DrawRay(ShootPoint.position, shootDirection, Color.red, 5, false);
 
             // Give velocity to the projectile
             projectile.GetComponent<Rigidbody2D>().velocity = shootDirection * BulletSpeed;
@@ -82,11 +81,32 @@ public class PlayerWeaponManager : MonoBehaviour
         }
 
     }
+
+
+    // Returns a random normalized vector towards the current aim direction but within the random 
+    // projectile spread angle
+    Vector2 GetShootDirectionWithinSpread()
+    {
+        // Get the vector pointing from the gun to the crosshair by subtracting mouse position and
+        // the shoot point (gun) position
+        Vector2 currentAimVector = (inputHandler.GetMousePosition() - 
+            (Vector2) Camera.main.WorldToScreenPoint(ShootPoint.position));
+
+        // Turn that vector into an angle
+        float currentAimAngle = Mathf.Atan2(currentAimVector.y, currentAimVector.x) * Mathf.Rad2Deg;
+        
+        // Get a random angle (within the given spread) near the current aim angle 
+        float randomAngleWithinSpread = Random.Range(currentAimAngle + (ProjectileSpreadAngle / 2), 
+            currentAimAngle - (ProjectileSpreadAngle / 2)) * Mathf.Deg2Rad;
+
+        // Turn that angle back into a vector
+        return new Vector2(Mathf.Cos(randomAngleWithinSpread), Mathf.Sin(randomAngleWithinSpread));
+    }
     
     
     
     
-    //"IEnumerator" indicates that this function is a coroutin
+    //"IEnumerator" indicates that this function is a coroutine
     IEnumerator ReloadWeapon() 
     {
 

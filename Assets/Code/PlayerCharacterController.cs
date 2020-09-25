@@ -31,7 +31,7 @@ public class PlayerCharacterController : MonoBehaviour {
 
         RollInvulnerabilityTime = 5f;
         RollCooldownTime = 5f;
-        Debug.Log(RollCooldownTime + " " + RollInvulnerabilityTime);
+        //Debug.Log(RollCooldownTime + " " + RollInvulnerabilityTime);
         
         PlayerControlEnabled = true;
         TimeOfLastRoll = float.NegativeInfinity; //this is so we have a roll available from the start
@@ -132,7 +132,7 @@ public class PlayerCharacterController : MonoBehaviour {
     private void TestInputCommands() {
          
          
-        if (inputHandler.GetFireInputDown()) {
+        /*if (inputHandler.GetFireInputDown()) {
             Debug.Log("fire pressed");
         }
 
@@ -144,7 +144,7 @@ public class PlayerCharacterController : MonoBehaviour {
             Debug.Log("fire stopped");
         }
         
-/*
+
         if (inputHandler.GetMeleeInputDown()) {
             Debug.Log("melee pressed");
         }
@@ -180,7 +180,7 @@ public class PlayerCharacterController : MonoBehaviour {
         }
 
         if (inputHandler.GetInteractInputUp()) {
-            Debug.Log("interact stopped");
+            //Debug.Log("interact stopped");
         }
     }
 

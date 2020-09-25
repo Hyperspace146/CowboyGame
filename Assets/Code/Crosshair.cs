@@ -28,7 +28,7 @@ public class Crosshair : MonoBehaviour {
     }
 
     void Update() {
-        Debug.Log(transform.position.z);
+        //Debug.Log(transform.position.z);
     }
 
     public Vector2 GetCrosshairPos() {
@@ -47,7 +47,7 @@ public class Crosshair : MonoBehaviour {
         float minX = cam.transform.position.x - Xrange;
         float maxX = cam.transform.position.x + Xrange;
 
-        Vector2 pos = cam.ScreenToWorldPoint(inputHandler.GetLookInput());
+        Vector2 pos = cam.ScreenToWorldPoint(inputHandler.GetMousePosition());
 
 
         //float xPos = Mathf.Clamp(transform.position.x + pos.x, minX, maxX);

@@ -39,8 +39,14 @@ public class PlayerInputHandler : MonoBehaviour {
         return move;
     }
     
-    public Vector2 GetLookInput() {
+    public Vector2 GetMousePosition() {
         return crossHair;
+    }
+
+    // Returns the vector pointing from the player's position to the crosshair in screenspace.
+    public Vector2 GetLookInput()
+    {
+        return GetMousePosition() - (Vector2) Camera.main.WorldToScreenPoint(transform.position);
     }
 
     void Update() {
