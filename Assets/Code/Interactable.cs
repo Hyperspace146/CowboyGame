@@ -1,48 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using UnityEngine.Events;
 
+[RequireComponent(typeof(SpriteOutline))]
 public class Interactable : MonoBehaviour
 {
+    // Other scripts attached to the same object will subscribe and customize the effects/events 
+    // of this interactable
+    public event UnityAction<GameObject> OnInteract;
 
-    public static Interactable script;
+    private SpriteOutline spriteOutline;
 
-
-    public event Action InteractableInRange;
-
-
-    private void Awake() {
-        script = this;
-    }
-
-    public void OnInteractableTriggerPlayerAbilityToInteract() {
-
-        if (InteractableInRange != null) {
-            InteractableInRange(); //invoke the action
-        }
-    
-    }
-
-    //trigger event as "happened" if player touches
-    private void OnTriggerEnter2D(Collider2D other) {
-
-        //call the event system and tell it to dispatch the event
-        script.OnInteractableTriggerPlayerAbilityToInteract();
-    }
-
-
-
-
-    // Start is called before the first frame update
     void Start()
     {
-        
+        spriteOutline = GetComponent<SpriteOutline>();
     }
 
-    // Update is called once per frame
-    void Update()
+    // If in range of the interactable and the player inputs Interact, invoke any OnInteract stuff
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        
+        PlayerInputHandler playerInput = collision.GetComponent<PlayerInputHandler>();
+        if (playerInput != null && playerInput.GetInteractInputDown() && OnInteract != null)
+        {
+            OnInteract.Invoke(collision.gameObject);
+        }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        spriteOutline.Color = Color.yellow;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        spriteOutline.Color = Color.white;
+    }
+
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(SpriteOutline))]
+[RequireComponent(typeof(SpriteOutline), typeof(Interactable))]
 public class Pickup : MonoBehaviour
 {
     [Tooltip("The amount of points the player's max health stat will increase by on pickup")]
@@ -19,58 +19,43 @@ public class Pickup : MonoBehaviour
     [Tooltip("The amount of dollars the player will lose or receive on pickup")]
     public int MoneyAmount;
 
-    SpriteOutline spriteOutline;
-
-    void Start()
+    private void Start()
     {
-        spriteOutline = GetComponent<SpriteOutline>();
+        // Subscribe to OnInteract so that when the player interacts with the pickup, we can change
+        // their stats
+        GetComponent<Interactable>().OnInteract += ChangePlayerStats;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void ChangePlayerStats(GameObject player)
     {
-        spriteOutline.Color = Color.yellow;
-    }
+        Health playerHealth = player.GetComponent<Health>();
+        PlayerStats playerStats = player.GetComponent<PlayerStats>();
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        Health playerHealth = collision.GetComponent<Health>();
-        PlayerStats playerStats = collision.GetComponent<PlayerStats>();
-        PlayerInputHandler playerInput = collision.GetComponent<PlayerInputHandler>();
-
-        // Check for Interact button input and player scripts
-        if (playerHealth != null && playerStats != null && playerInput != null && playerInput.GetInteractInputDown())
+        // Apply all stat/health changes if non-zero
+        if (MaxHealthBuff != 0)
         {
-            // Apply all stat/health changes if non-zero
-            if (MaxHealthBuff != 0)
-            {
-                playerHealth.ChangeMaxHealth(MaxHealthBuff);
-            }
-            if (HealthRegained != 0)
-            {
-                playerHealth.ChangeHealth(HealthRegained);
-            }
-            if (AttackStatBuff != 0)
-            {
-                playerStats.ChangeAttackStat(AttackStatBuff);
-            }
-            if (DefenseStatBuff != 0)
-            {
-                playerStats.ChangeDefenseStat(DefenseStatBuff);
-            }
-            if (SpeedStatBuff != 0)
-            {
-                playerStats.ChangeSpeedStat(SpeedStatBuff);
-            }
-            if (MoneyAmount != 0)
-            {
-                playerStats.ChangeMoneySum(MoneyAmount);
-            }
-            Destroy(this.gameObject);
+            playerHealth.ChangeMaxHealth(MaxHealthBuff);
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        spriteOutline.Color = Color.white;
+        if (HealthRegained != 0)
+        {
+            playerHealth.ChangeHealth(HealthRegained);
+        }
+        if (AttackStatBuff != 0)
+        {
+            playerStats.ChangeAttackStat(AttackStatBuff);
+        }
+        if (DefenseStatBuff != 0)
+        {
+            playerStats.ChangeDefenseStat(DefenseStatBuff);
+        }
+        if (SpeedStatBuff != 0)
+        {
+            playerStats.ChangeSpeedStat(SpeedStatBuff);
+        }
+        if (MoneyAmount != 0)
+        {
+            playerStats.ChangeMoneySum(MoneyAmount);
+        }
+        Destroy(this.gameObject);
     }
 }

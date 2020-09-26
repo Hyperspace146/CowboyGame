@@ -32,7 +32,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private PlayerInputHandler inputHandler;
     private float lastTimeShot;
-    private bool IsReloading;
+    private bool isReloading;
 
     // Start is called before the first frame update
     void Start()
@@ -45,9 +45,8 @@ public class PlayerWeaponManager : MonoBehaviour
     void Update()
     {
         //The "!IsReloading" makes sure that the coroutine doesn't happen multiple times during a reload 
-        if (!IsReloading && (inputHandler.GetReloadWeaponHeldDown() || CurrentAmmo <= 0)) {
+        if (!isReloading && (inputHandler.GetReloadWeaponHeldDown() || CurrentAmmo <= 0)) {
             StartCoroutine(ReloadWeapon());
-            IsReloading = true;
         }
 
         if (inputHandler.GetFireInputHeld())
@@ -59,22 +58,23 @@ public class PlayerWeaponManager : MonoBehaviour
 
     void TryShoot()
     {
-        // Shoot if able to (not reloading, has ammo, and has waited the delay between shots)
-        if (!IsReloading && CurrentAmmo > 0 && lastTimeShot + DelayBetweenShots < Time.time)
+        // Shoot if able to (not reloading, has ammo, and the time delay between shots has passed)
+        if (!isReloading && CurrentAmmo > 0 && lastTimeShot + DelayBetweenShots < Time.time)
         {
             // Decrease ammo by the amount of projectiles shot
             CurrentAmmo -= 1;
 
             // For now, projectiles shoot straight forward, no spread yet
             Vector2 shootDirection = GetShootDirectionWithinSpread();
-            GameObject projectile = Instantiate(ProjectilePrefab, ShootPoint.position, transform.rotation,
-                    this.gameObject.transform);
+            GameObject projectile = Instantiate(ProjectilePrefab, ShootPoint.position, 
+                transform.rotation, this.gameObject.transform);
 
             // Begin the coroutine to have the projectile despawn after given amount of time
             StartCoroutine(DespawnProjectile(projectile));
 
             // Have collisions ignored between the projectile and the player that shot it
-            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), projectile.GetComponent<Collider2D>());
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), 
+                projectile.GetComponent<Collider2D>());
 
             //Debug.DrawRay(ShootPoint.position, shootDirection, Color.red, 5, false);
 
@@ -92,7 +92,8 @@ public class PlayerWeaponManager : MonoBehaviour
         }
     }
 
-    // Despawns the given projectile after certain amount of time, and triggers any events that should happen on despawn
+    // Despawns the given projectile after certain amount of time, and triggers any events that 
+    // should happen on despawn
     IEnumerator DespawnProjectile(GameObject projectile)
     {
         yield return new WaitForSeconds(TimeBeforeProjectileDespawns);
@@ -127,22 +128,11 @@ public class PlayerWeaponManager : MonoBehaviour
     //"IEnumerator" indicates that this function is a coroutine
     IEnumerator ReloadWeapon() 
     {
-        //initiate reload animation somehow***
-
-        float TimeOfLastReload = Time.time;
-
-        //coroutine line
+        isReloading = true;
+        // Wait for the specified reload time before refilling the clip
         yield return new WaitForSeconds(ReloadTime);
-
-
-        /* this code is probably also ok
-        while (Time.time < TimeOfLastReload + ReloadTime)
-        {
-            IsReloading = true;
-        }
-        */
-
-        IsReloading = false;
+        CurrentAmmo = ClipSize;
+        isReloading = false;
     }
 
 }

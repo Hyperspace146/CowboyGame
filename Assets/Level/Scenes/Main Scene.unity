@@ -123,6 +123,23 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &354112289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7019539650290847557, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+  m_PrefabInstance: {fileID: 7019539649689816096}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &354112291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354112289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21b3a5016b33c4520ae3e53163453a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &755196594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -207,6 +224,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7019539649318132179, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7019539649457030661, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
       propertyPath: m_Name
       value: Adrian Stuff
@@ -254,6 +275,10 @@ PrefabInstance:
     - target: {fileID: 7019539649457030662, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019539649927288324, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
