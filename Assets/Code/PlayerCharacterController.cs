@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerStats), typeof(PlayerInputHandler), typeof(Rigidbody2D))]
-[RequireComponent(typeof(Crosshair))]
+[RequireComponent(typeof(PlayerStats), typeof(PlayerInputHandler), typeof(PlayerMelee))]
+[RequireComponent(typeof(Crosshair), typeof(Rigidbody2D))]
 
 public class PlayerCharacterController : MonoBehaviour {
 
@@ -15,8 +15,9 @@ public class PlayerCharacterController : MonoBehaviour {
     private Vector2 crosshairPos;
     private float moveSpeedMultiplier = 0.5f;
 
-    public PlayerInputHandler inputHandler; //get the inputhandler script so we have access to its methods from here
+    private PlayerInputHandler inputHandler; //get the inputhandler script so we have access to its methods from here
     private PlayerStats playerStats;
+    private PlayerMelee playerMelee;
     private GameObject crosshair;
     private Crosshair crosshairScript;
 
@@ -40,6 +41,7 @@ public class PlayerCharacterController : MonoBehaviour {
  
         inputHandler = GetComponent<PlayerInputHandler>();
         playerStats = GetComponent<PlayerStats>();
+        playerMelee = GetComponent<PlayerMelee>();
         crosshair = GameObject.FindWithTag("Crosshair");
         crosshairScript = crosshair.GetComponent<Crosshair>();
 
@@ -83,6 +85,13 @@ public class PlayerCharacterController : MonoBehaviour {
             //thrust player forward physically
             rb.AddForce(inputHandler.GetMoveInput() * 2000, ForceMode2D.Force);
             StartCoroutine(BecomeInvulnerableForTime());
+        }
+
+        // Melee
+        if (inputHandler.GetMeleeInputDown())
+        {
+            PlayerControlEnabled = false;
+            playerMelee.MeleeAttack();
         }
         
     }

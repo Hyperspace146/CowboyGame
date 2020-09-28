@@ -68,6 +68,7 @@ public class PlayerWeaponManager : MonoBehaviour
             Vector2 shootDirection = GetShootDirectionWithinSpread();
             GameObject projectile = Instantiate(ProjectilePrefab, ShootPoint.position, 
                 transform.rotation, this.gameObject.transform);
+            projectile.GetComponent<ContactDamage>().Damage = Damage;
 
             // Begin the coroutine to have the projectile despawn after given amount of time
             StartCoroutine(DespawnProjectile(projectile));

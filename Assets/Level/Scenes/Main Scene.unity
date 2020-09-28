@@ -224,9 +224,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4237432786449732904, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4237432786449732904, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7019539649318132179, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019539649318132182, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: Damage
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019539649318132182, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: MeleeHitboxOffset
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7019539649457030661, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
       propertyPath: m_Name
@@ -277,6 +293,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7019539649927288324, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019539649931967282, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
