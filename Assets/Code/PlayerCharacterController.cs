@@ -55,36 +55,6 @@ public class PlayerCharacterController : MonoBehaviour {
         PlayerControlEnabled = false;
     }
 
-<<<<<<< HEAD
-    //listens for interact event(doesn't listen for interact input, listens for if there is an object nearby that 
-    //the player is trying to interact with)
-    //if event is triggered, this method is called
-    public void interact() {
-
-        //actually initiate the in-game event here
-        
-        Debug.Log("Interactable touched");
-
-
-        if (inputHandler.GetInteractInputHeld()) {
-            Debug.Log("Interactable interacted with");
-
-            //invoke the interactable script and get the chinese exclusion act script and then invoke the method that effects the player
-            
-
-
-
-
-
-        }
-
-        
-
-    }
-
-
-=======
->>>>>>> db20a7632f600a6f509935bfe9656c766d5c0333
 
     /*
     PlayerCharacterController - handles movement using the info from PlayerInputHandler
@@ -98,9 +68,10 @@ public class PlayerCharacterController : MonoBehaviour {
         if (PlayerControlEnabled) {
             HandleCharacterMovement();
             HandleCharacterActions();
+            TestInputCommands();
         }
 
-        //TestInputCommands();
+        
        
     }
 
@@ -117,19 +88,14 @@ public class PlayerCharacterController : MonoBehaviour {
             StartCoroutine(BecomeInvulnerableForTime());
         }
 
-<<<<<<< HEAD
-       
-
-
-=======
         // Melee
         if (inputHandler.GetMeleeInputDown())
         {
-            PlayerControlEnabled = false;
-            playerMelee.MeleeAttack();
+            Debug.Log("hi");
+            //PlayerControlEnabled = false;
+            //playerMelee.MeleeAttack();
         }
         
->>>>>>> db20a7632f600a6f509935bfe9656c766d5c0333
     }
 
 
@@ -151,9 +117,9 @@ public class PlayerCharacterController : MonoBehaviour {
     private void TestInputCommands() {
          
          
-        if (inputHandler.GetFireInputDown()) {
-            Debug.Log("fire pressed");
-        }
+       /*  // if (inputHandler.GetFireInputDown()) {
+        //     Debug.Log("fire pressed");
+        // } */
 
         //if (inputHandler.GetFireInputHeld())
         //{
@@ -166,20 +132,20 @@ public class PlayerCharacterController : MonoBehaviour {
         //}
 
 
-        //if (inputHandler.GetMeleeInputDown())
-        //{
-        //    Debug.Log("melee pressed");
-        //}
+        if (inputHandler.GetMeleeInputDown())
+        {
+           Debug.Log("melee pressed");
+        }
 
-        //if (inputHandler.GetMeleeInputHeld())
-        //{
-        //    Debug.Log("melee held");
-        //}
+        if (inputHandler.GetMeleeInputHeld())
+        {
+           Debug.Log("melee held");
+        }
 
-        //if (inputHandler.GetMeleeInputUp())
-        //{
-        //    Debug.Log("melee stopped");
-        //}
+        if (inputHandler.GetMeleeInputUp())
+        {
+           Debug.Log("melee stopped");
+        }
 
 
 
