@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerStats), typeof(PlayerInputHandler), typeof(Rigidbody2D))]
-[RequireComponent(typeof(Crosshair))]
+[RequireComponent(typeof(PlayerStats), typeof(PlayerInputHandler), typeof(PlayerMelee))]
+[RequireComponent(typeof(Crosshair), typeof(Rigidbody2D))]
 
 public class PlayerCharacterController : MonoBehaviour {
 
@@ -15,8 +15,9 @@ public class PlayerCharacterController : MonoBehaviour {
     private Vector2 crosshairPos;
     private float moveSpeedMultiplier = 0.5f;
 
-    public PlayerInputHandler inputHandler; //get the inputhandler script so we have access to its methods from here
+    private PlayerInputHandler inputHandler; //get the inputhandler script so we have access to its methods from here
     private PlayerStats playerStats;
+    private PlayerMelee playerMelee;
     private GameObject crosshair;
     private Crosshair crosshairScript;
 
@@ -40,11 +41,12 @@ public class PlayerCharacterController : MonoBehaviour {
  
         inputHandler = GetComponent<PlayerInputHandler>();
         playerStats = GetComponent<PlayerStats>();
+        playerMelee = GetComponent<PlayerMelee>();
         crosshair = GameObject.FindWithTag("Crosshair");
         crosshairScript = crosshair.GetComponent<Crosshair>();
 
         //when the "InteractPressedOnInteractable" event is triggered, the interact method is initiated
-        Interactable.script.InteractableInRange += interact;
+        //Interactable.script.InteractableInRange += interact;
         
 
     }
@@ -53,6 +55,7 @@ public class PlayerCharacterController : MonoBehaviour {
         PlayerControlEnabled = false;
     }
 
+<<<<<<< HEAD
     //listens for interact event(doesn't listen for interact input, listens for if there is an object nearby that 
     //the player is trying to interact with)
     //if event is triggered, this method is called
@@ -80,6 +83,8 @@ public class PlayerCharacterController : MonoBehaviour {
     }
 
 
+=======
+>>>>>>> db20a7632f600a6f509935bfe9656c766d5c0333
 
     /*
     PlayerCharacterController - handles movement using the info from PlayerInputHandler
@@ -112,9 +117,19 @@ public class PlayerCharacterController : MonoBehaviour {
             StartCoroutine(BecomeInvulnerableForTime());
         }
 
+<<<<<<< HEAD
        
 
 
+=======
+        // Melee
+        if (inputHandler.GetMeleeInputDown())
+        {
+            PlayerControlEnabled = false;
+            playerMelee.MeleeAttack();
+        }
+        
+>>>>>>> db20a7632f600a6f509935bfe9656c766d5c0333
     }
 
 
@@ -136,56 +151,67 @@ public class PlayerCharacterController : MonoBehaviour {
     private void TestInputCommands() {
          
          
-        /*if (inputHandler.GetFireInputDown()) {
+        if (inputHandler.GetFireInputDown()) {
             Debug.Log("fire pressed");
         }
 
-        if (inputHandler.GetFireInputHeld()) {
-            Debug.Log("fire held");
-        }
+        //if (inputHandler.GetFireInputHeld())
+        //{
+        //    Debug.Log("fire held");
+        //}
 
-        if (inputHandler.GetFireInputUp()) {
-            Debug.Log("fire stopped");
-        }
-        
-
-        if (inputHandler.GetMeleeInputDown()) {
-            Debug.Log("melee pressed");
-        }
-
-        if (inputHandler.GetMeleeInputHeld()) {
-            Debug.Log("melee held");
-        }
-
-        if (inputHandler.GetMeleeInputUp()) {
-            Debug.Log("melee stopped");
-        }
-        
+        //if (inputHandler.GetFireInputUp())
+        //{
+        //    Debug.Log("fire stopped");
+        //}
 
 
-        if (inputHandler.GetRollInputDown()) {
-            Debug.Log("roll pressed");
-        }
+        //if (inputHandler.GetMeleeInputDown())
+        //{
+        //    Debug.Log("melee pressed");
+        //}
 
-        if (inputHandler.GetRollInputHeld()) {
-            Debug.Log("roll held");
-        }
+        //if (inputHandler.GetMeleeInputHeld())
+        //{
+        //    Debug.Log("melee held");
+        //}
 
-        if (inputHandler.GetRollInputUp()) {
-            Debug.Log("roll stopped");
-        }
-        */
-        if (inputHandler.GetInteractInputDown()) {
-            Debug.Log("interact pressed");
-        }
+        //if (inputHandler.GetMeleeInputUp())
+        //{
+        //    Debug.Log("melee stopped");
+        //}
 
-        if (inputHandler.GetInteractInputHeld()) {
-            Debug.Log("interact held");
-        }
 
-        if (inputHandler.GetInteractInputUp()) {
-            //Debug.Log("interact stopped");
-        }
+
+        //if (inputHandler.GetRollInputDown())
+        //{
+        //    Debug.Log("roll pressed");
+        //}
+
+        //if (inputHandler.GetRollInputHeld())
+        //{
+        //    Debug.Log("roll held");
+        //}
+
+        //if (inputHandler.GetRollInputUp())
+        //{
+        //    Debug.Log("roll stopped");
+        //}
+
+        //if (inputHandler.GetInteractInputDown())
+        //{
+        //    Debug.Log("interact pressed");
+        //}
+
+        //if (inputHandler.GetInteractInputHeld())
+        //{
+        //    Debug.Log("interact held");
+        //}
+
+        //if (inputHandler.GetInteractInputUp())
+        //{
+        //    Debug.Log("interact stopped");
+        //}
     }
 
 

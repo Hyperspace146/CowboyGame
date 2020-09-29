@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(PlayerInputHandler), typeof(Camera))]
+[RequireComponent(typeof(Rigidbody2D))]
 
 //Script to keep the crosshair at the same location as the mouse
 public class Crosshair : MonoBehaviour {
@@ -23,7 +23,7 @@ public class Crosshair : MonoBehaviour {
 
         //store the player's playerinputhandler script here
         //so that we have access to its methods
-        inputHandler = GetComponent<PlayerInputHandler>();
+        inputHandler = GetComponentInParent<PlayerInputHandler>();
 
     }
 

@@ -23,33 +23,28 @@ public class PlayerMelee : MonoBehaviour
     void Start()
     {
         inputHandler = GetComponent<PlayerInputHandler>();
-    }
-
-    void Update()
-    {
-        //if (inputHandler.GetMeleeInputDown()) 
-        //{
-        //    MeleeAttack();
-        //}
+        MeleeHitbox.GetComponent<ContactDamage>().Damage = Damage;
     }
 
     // Performs the melee attack by enabling the hitbox in the current look direction, all
-    // in accordance with the given startup, active, and recovery time.
-    void MeleeAttack()
+    // in accordance with the attack's given startup, active, and recovery time.
+    public void MeleeAttack()
     {
         StartCoroutine(MeleeAttackCoroutine());
     }
 
-    // Helper method that allows the melee attack to follow timings in seconds
+    // Helper method that allows the melee attack to follow startup, active, and recovery time
+    // in real-time seconds
     IEnumerator MeleeAttackCoroutine()
     {
-        // TODO: make inactionable (to rolls, interact, shoot, anything but walk). In inputHandler?
+        // TODO: make inactionable (to rolls, interact, shoot, another melee, anything but walk). In inputHandler?
         // TODO: Apply knockback
 
         // Update the position of the melee hit box to be in the direction the player is facing
         // at the right offset. It's a circle collider, so we can disregard rotating the collider
         MeleeHitbox.GetComponent<Transform>().position = inputHandler.GetLookInput().normalized
             * MeleeHitboxOffset;
+        Debug.Log(inputHandler.GetLookInput().normalized);
 
         yield return new WaitForSeconds(StartupTime);
 
@@ -67,20 +62,6 @@ public class PlayerMelee : MonoBehaviour
 
         yield return new WaitForSeconds(RecoveryTime);
 
-        // TODO: make actionable
+        // TODO: make actionable again
     }
-
-    /*private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // TODO: Maybe should use OnTriggerStay2D for consistent detection. Needs testing
-
-        Debug.Log("Melee hit!");
-
-        // Apply damage if the collision happens with an object with Health (table, player, etc.)
-        Health victimHealth = collision.GetComponent<Health>();
-        if (victimHealth != null)
-        {
-            victimHealth.ChangeHealth(-Damage);
-        }
-    }*/
 }
