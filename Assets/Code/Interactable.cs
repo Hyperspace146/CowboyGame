@@ -6,10 +6,20 @@ using System;
 public class Interactable : MonoBehaviour
 {
 
+
+    public Pickup PickupScript;
     public static Interactable script;
 
-
     public event Action InteractableInRange;
+
+
+
+    public void InvokePickupEffect() {
+
+        //Invoke the chinese exclusion act effect on player
+
+
+    }
 
 
     private void Awake() {
@@ -25,7 +35,7 @@ public class Interactable : MonoBehaviour
     }
 
     //trigger event as "happened" if player touches
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerStay2D(Collider2D other) {
 
         //call the event system and tell it to dispatch the event
         script.OnInteractableTriggerPlayerAbilityToInteract();

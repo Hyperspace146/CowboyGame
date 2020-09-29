@@ -64,9 +64,18 @@ public class PlayerCharacterController : MonoBehaviour {
 
 
         if (inputHandler.GetInteractInputHeld()) {
-
             Debug.Log("Interactable interacted with");
+
+            //invoke the interactable script and get the chinese exclusion act script and then invoke the method that effects the player
+            
+
+
+
+
+
         }
+
+        
 
     }
 
@@ -103,12 +112,7 @@ public class PlayerCharacterController : MonoBehaviour {
             StartCoroutine(BecomeInvulnerableForTime());
         }
 
-        if (inputHandler.GetInteractInputHeld()) {
-
-
-            interact();
-
-        }
+       
 
 
     }
