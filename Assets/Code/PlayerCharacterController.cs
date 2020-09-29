@@ -18,6 +18,7 @@ public class PlayerCharacterController : MonoBehaviour {
     private PlayerInputHandler inputHandler; //get the inputhandler script so we have access to its methods from here
     private PlayerStats playerStats;
     private PlayerMelee playerMelee;
+    private PlayerWeaponManager playerWeaponManager;
     private GameObject crosshair;
     private Crosshair crosshairScript;
 
@@ -27,6 +28,7 @@ public class PlayerCharacterController : MonoBehaviour {
     private bool RollAvailable;
 
     public bool PlayerControlEnabled;
+    public bool PlayerActionsEnabled;
 
     void Start() {
 
@@ -35,6 +37,7 @@ public class PlayerCharacterController : MonoBehaviour {
         //Debug.Log(RollCooldownTime + " " + RollInvulnerabilityTime);
         
         PlayerControlEnabled = true;
+        PlayerActionsEnabled = true;
         TimeOfLastRoll = float.NegativeInfinity; //this is so we have a roll available from the start
         //store the player's playerinputhandler script here
         //so that we have access to its methods
@@ -42,6 +45,7 @@ public class PlayerCharacterController : MonoBehaviour {
         inputHandler = GetComponent<PlayerInputHandler>();
         playerStats = GetComponent<PlayerStats>();
         playerMelee = GetComponent<PlayerMelee>();
+        playerWeaponManager = GetComponent<PlayerWeaponManager>();
         crosshair = GameObject.FindWithTag("Crosshair");
         crosshairScript = crosshair.GetComponent<Crosshair>();
 
@@ -67,7 +71,11 @@ public class PlayerCharacterController : MonoBehaviour {
         
         if (PlayerControlEnabled) {
             HandleCharacterMovement();
-            HandleCharacterActions();
+
+            if (PlayerActionsEnabled)
+            {
+                HandleCharacterActions();
+            }
         }
 
         //TestInputCommands();
@@ -79,7 +87,8 @@ public class PlayerCharacterController : MonoBehaviour {
         //roll
         RollAvailable = (Time.time - TimeOfLastRoll) > RollCooldownTime;
         //Debug.Log("curr time: " + Time.time + ", TimeOfLastRoll: " + TimeOfLastRoll + " RollCooldownTime: " + RollCooldownTime);
-        if (inputHandler.GetRollInputDown() && RollAvailable) {
+        if (inputHandler.GetRollInputDown() && RollAvailable)
+        {
             TimeOfLastRoll = Time.time;
 
             //thrust player forward physically
@@ -90,10 +99,21 @@ public class PlayerCharacterController : MonoBehaviour {
         // Melee
         if (inputHandler.GetMeleeInputDown())
         {
-            PlayerControlEnabled = false;
             playerMelee.MeleeAttack();
         }
-        
+
+        // Shooting
+        if (inputHandler.GetFireInputHeld())
+        {
+            playerWeaponManager.TryShoot();
+        }
+
+        // Reloading
+        if (inputHandler.GetReloadWeaponHeldDown())
+        {
+            playerWeaponManager.TryReloadWeapon();
+        }
+
     }
 
 

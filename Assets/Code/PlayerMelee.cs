@@ -19,10 +19,12 @@ public class PlayerMelee : MonoBehaviour
     public float MeleeHitboxOffset;
 
     private PlayerInputHandler inputHandler;
+    private PlayerCharacterController characterController;
 
     void Start()
     {
         inputHandler = GetComponent<PlayerInputHandler>();
+        characterController = GetComponent<PlayerCharacterController>();
         MeleeHitbox.GetComponent<ContactDamage>().Damage = Damage;
     }
 
@@ -37,7 +39,8 @@ public class PlayerMelee : MonoBehaviour
     // in real-time seconds
     IEnumerator MeleeAttackCoroutine()
     {
-        // TODO: make inactionable (to rolls, interact, shoot, another melee, anything but walk). In inputHandler?
+        characterController.PlayerControlEnabled = false;
+
         // TODO: Apply knockback
 
         // Update the position of the melee hit box to be in the direction the player is facing
@@ -62,6 +65,6 @@ public class PlayerMelee : MonoBehaviour
 
         yield return new WaitForSeconds(RecoveryTime);
 
-        // TODO: make actionable again
+        characterController.PlayerControlEnabled = true;
     }
 }

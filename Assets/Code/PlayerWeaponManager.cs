@@ -31,38 +31,30 @@ public class PlayerWeaponManager : MonoBehaviour
     public UnityAction<GameObject> OnProjectileDespawn;
 
     private PlayerInputHandler inputHandler;
+    private PlayerCharacterController characterController;
     private float lastTimeShot;
-    private bool isReloading;
 
     // Start is called before the first frame update
     void Start()
     {
         CurrentAmmo = ClipSize; //automatically set player's ammo as full at the start
         inputHandler = GetComponent<PlayerInputHandler>();
+        characterController = GetComponent<PlayerCharacterController>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //The "!IsReloading" makes sure that the coroutine doesn't happen multiple times during a reload 
-        if (!isReloading && (inputHandler.GetReloadWeaponHeldDown() || CurrentAmmo <= 0)) {
-            StartCoroutine(ReloadWeapon());
-        }
-
-        if (inputHandler.GetFireInputHeld())
-        {
-            TryShoot();
-        }
-    }
-
-
-    void TryShoot()
+    public void TryShoot()
     {
         // Shoot if able to (not reloading, has ammo, and the time delay between shots has passed)
-        if (!isReloading && CurrentAmmo > 0 && lastTimeShot + DelayBetweenShots < Time.time)
+        if (CurrentAmmo > 0 && lastTimeShot + DelayBetweenShots < Time.time)
         {
-            // Decrease ammo by the amount of projectiles shot
+            // Decrease ammo by one shot
             CurrentAmmo -= 1;
+
+            // If the ammo drops to 0, start a reload automatically
+            if (CurrentAmmo <= 0)
+            {
+                TryReloadWeapon();
+            }
 
             // For now, projectiles shoot straight forward, no spread yet
             Vector2 shootDirection = GetShootDirectionWithinSpread();
@@ -125,15 +117,22 @@ public class PlayerWeaponManager : MonoBehaviour
         return new Vector2(Mathf.Cos(randomAngleWithinSpread), Mathf.Sin(randomAngleWithinSpread));
     }
     
+    public void TryReloadWeapon()
+    {
+        if (CurrentAmmo != ClipSize)
+        {
+            StartCoroutine(ReloadWeaponCoroutine());
+        }
+    }
     
     //"IEnumerator" indicates that this function is a coroutine
-    IEnumerator ReloadWeapon() 
+    public IEnumerator ReloadWeaponCoroutine() 
     {
-        isReloading = true;
+        characterController.PlayerActionsEnabled = false;
         // Wait for the specified reload time before refilling the clip
         yield return new WaitForSeconds(ReloadTime);
         CurrentAmmo = ClipSize;
-        isReloading = false;
+        characterController.PlayerActionsEnabled = true;
     }
 
 }
