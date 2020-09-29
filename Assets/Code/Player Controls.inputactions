@@ -241,7 +241,7 @@
                 {
                     "name": "",
                     "id": "d88dd913-abe5-4de3-86f4-df6fbf4b835c",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard + mouse",
@@ -263,7 +263,7 @@
                 {
                     "name": "",
                     "id": "030d1b05-006d-48af-a449-04169319460b",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard + mouse",
@@ -296,7 +296,7 @@
                 {
                     "name": "",
                     "id": "9465b682-7c78-430d-8953-90ac58749505",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard + mouse",
@@ -307,7 +307,7 @@
                 {
                     "name": "",
                     "id": "071cd0bd-81d5-4fde-b32d-eb9123660b00",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard + mouse",
@@ -340,7 +340,7 @@
                 {
                     "name": "",
                     "id": "cf7a28d3-b212-4d6d-ac46-54fbcc996664",
-                    "path": "<Keyboard>/q",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard + mouse",
@@ -351,7 +351,7 @@
                 {
                     "name": "",
                     "id": "7b0dab6c-f6dc-46f7-9113-bd9f1b9e4caf",
-                    "path": "<Keyboard>/q",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard + mouse",
@@ -373,7 +373,7 @@
                 {
                     "name": "",
                     "id": "ea6226b4-04db-4ca3-9618-f990ca19bbb9",
-                    "path": "<Keyboard>/x",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard + mouse",

@@ -58,6 +58,7 @@ public class PlayerInputHandler : MonoBehaviour {
        
         DetectMoveInput();
         DetectCrosshairInput();
+        DetectMeleeInput();
         DetectShootInput();
         DetectInteractInput();
         DetectRollInput();
