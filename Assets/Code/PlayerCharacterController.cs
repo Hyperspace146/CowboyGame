@@ -134,11 +134,11 @@ public class PlayerCharacterController : MonoBehaviour {
 
 
     private void TestInputCommands() {
-         
-         
-       /*  // if (inputHandler.GetFireInputDown()) {
-        //     Debug.Log("fire pressed");
-        // } */
+
+
+        /*  // if (inputHandler.GetFireInputDown()) {
+         //     Debug.Log("fire pressed");
+         // } */
 
         //if (inputHandler.GetFireInputHeld())
         //{
@@ -151,20 +151,20 @@ public class PlayerCharacterController : MonoBehaviour {
         //}
 
 
-        if (inputHandler.GetMeleeInputDown())
-        {
-           Debug.Log("melee pressed");
-        }
+        //if (inputHandler.GetMeleeInputDown())
+        //{
+        //   Debug.Log("melee pressed");
+        //}
 
-        if (inputHandler.GetMeleeInputHeld())
-        {
-           Debug.Log("melee held");
-        }
+        //if (inputHandler.GetMeleeInputHeld())
+        //{
+        //   Debug.Log("melee held");
+        //}
 
-        if (inputHandler.GetMeleeInputUp())
-        {
-           Debug.Log("melee stopped");
-        }
+        //if (inputHandler.GetMeleeInputUp())
+        //{
+        //   Debug.Log("melee stopped");
+        //}
 
 
 
@@ -197,6 +197,13 @@ public class PlayerCharacterController : MonoBehaviour {
         //{
         //    Debug.Log("interact stopped");
         //}
+
+
+        if (inputHandler.GetReloadWeaponHeldDown())
+        {
+            Debug.Log("reload held");
+        }
+
     }
 
 

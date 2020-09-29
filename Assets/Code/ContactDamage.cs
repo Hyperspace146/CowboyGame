@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
+[RequireComponent(typeof(Collider2D))]
 public class ContactDamage : MonoBehaviour
 {
     // This value is usually assigned by a different script, the one that instantiated/activated 

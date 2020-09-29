@@ -151,7 +151,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7019539649318132180}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7019539649318132179
 GameObject:
@@ -189,9 +189,9 @@ Transform:
   m_LocalPosition: {x: -0.32, y: -0.2, z: 1.199858}
   m_LocalScale: {x: 0.22382298, y: 0.22382298, z: 0.22382298}
   m_Children:
-  - {fileID: 7019539649931967283}
   - {fileID: 7019539649025326925}
   - {fileID: 7019539649927288325}
+  - {fileID: 7019539649931967283}
   m_Father: {fileID: 7019539649457030662}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -319,10 +319,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 7019539649318132186}
   cam: {fileID: 7019539650129707703}
-  inputHandler: {fileID: 7019539649318132188}
   RollInvulnerabilityTime: 2
   RollCooldownTime: 5
   PlayerControlEnabled: 0
+  PlayerActionsEnabled: 0
 --- !u!114 &7019539649318132184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,7 +458,7 @@ Transform:
   m_LocalScale: {x: 13.505672, y: 13.505672, z: 13.505672}
   m_Children: []
   m_Father: {fileID: 7019539649318132180}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7019539649927288329
 SpriteRenderer:
@@ -564,7 +564,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7019539649931967283
 Transform:
   m_ObjectHideFlags: 0
@@ -577,7 +577,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7019539649318132180}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6644985515937030223
 MonoBehaviour:
@@ -592,6 +592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 0
+  DestroyThisOnCollisions: 0
 --- !u!58 &7019539649931967284
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -153,7 +153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 678413878788882613, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1949588609828155354, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -244,13 +244,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4237432786449732904, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019539649318132182, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: StartupTime
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7019539649457030661, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
       propertyPath: m_Name
       value: Adrian Stuff
       objectReference: {fileID: 0}
     - target: {fileID: 7019539649457030661, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7019539649457030662, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -296,5 +304,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7019539649931967282, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019539649931967283, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019539649931967283, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019539649931967284, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019539649931967284, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4237432786449732904, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5615440c9f1e6f5498ef0737fc97dc5d, type: 3}
