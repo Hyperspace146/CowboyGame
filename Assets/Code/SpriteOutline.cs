@@ -3,8 +3,7 @@
 [ExecuteInEditMode]
 public class SpriteOutline : MonoBehaviour {
     public Color Color = Color.white;
-
-    [Range(0, 16)]
+    
     public int OutlineSize = 1;
 
     private SpriteRenderer spriteRenderer;

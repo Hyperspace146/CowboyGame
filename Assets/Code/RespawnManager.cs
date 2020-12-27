@@ -23,6 +23,6 @@ public class RespawnManager : MonoBehaviour
         player.transform.position = RespawnLocations[Random.Range(0, RespawnLocations.Length)].position;
         player.GetComponent<SpriteRenderer>().enabled = true;
         player.GetComponent<PlayerStats>().ResetStatsToDefault();
-        player.GetComponent<Health>().RefillHealth();
+        player.GetComponent<Health>().RefillAllHealth();
     }
 }

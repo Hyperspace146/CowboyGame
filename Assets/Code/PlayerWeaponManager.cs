@@ -59,7 +59,7 @@ public class PlayerWeaponManager : MonoBehaviour
             // For now, projectiles shoot straight forward, no spread yet
             Vector2 shootDirection = GetShootDirectionWithinSpread();
             GameObject projectile = Instantiate(ProjectilePrefab, ShootPoint.position, 
-                transform.rotation, this.gameObject.transform);
+                transform.rotation);
             projectile.GetComponent<ContactDamage>().Damage = Damage;
 
             // Begin the coroutine to have the projectile despawn after given amount of time

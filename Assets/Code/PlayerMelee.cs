@@ -26,6 +26,7 @@ public class PlayerMelee : MonoBehaviour
         inputHandler = GetComponent<PlayerInputHandler>();
         characterController = GetComponent<PlayerCharacterController>();
         MeleeHitbox.GetComponent<ContactDamage>().Damage = Damage;
+        MeleeHitbox.enabled = false;
     }
 
     // Performs the melee attack by enabling the hitbox in the current look direction, all

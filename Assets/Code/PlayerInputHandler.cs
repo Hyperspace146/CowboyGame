@@ -62,7 +62,7 @@ public class PlayerInputHandler : MonoBehaviour {
         DetectShootInput();
         DetectInteractInput();
         DetectRollInput();
-
+        DetectReload();
    }
 
    private void DetectMoveInput() {
