@@ -6,6 +6,8 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
     public int BaseMaxHealth;
+    [Tooltip("If this GameObject is a player, it needs to know its character prefab so it can respawn.")]
+    public GameObject CharacterPrefab;
     public UnityAction OnDeath;
 
     private int maxHealth;      
@@ -78,9 +80,8 @@ public class Health : MonoBehaviour
 
             // TODO: Play the death animation
 
-
-            // TODO: Set up respawning the player
-            //respawnManager.RespawnPlayer(this.gameObject);
+            
+            respawnManager.RespawnPlayer(CharacterPrefab);
         }
         else
         {

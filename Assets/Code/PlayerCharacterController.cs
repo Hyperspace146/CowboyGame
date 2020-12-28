@@ -122,7 +122,7 @@ public class PlayerCharacterController : MonoBehaviour {
             playerWeaponManager.TryReloadWeapon();
         }
 
-        // Interacting (includes interacting and dropping corpses. see OnTriggerStay2D also)
+        // Interacting (includes interacting and dropping corpses)
         if (inputHandler.GetInteractInputDown())
         {
             Debug.Log("interact");
