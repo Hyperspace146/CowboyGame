@@ -16,13 +16,11 @@ public class RespawnManager : MonoBehaviour
         StartCoroutine(WaitThenRespawnPlayer(player));
     }
 
-    IEnumerator WaitThenRespawnPlayer(GameObject player)
+    IEnumerator WaitThenRespawnPlayer(GameObject characterPrefab)
     {
         yield return new WaitForSeconds(RespawnTime);
-        // TODO: respawn player at one of the respawn locations with cooldowns and stats lowered/reset
-        player.transform.position = RespawnLocations[Random.Range(0, RespawnLocations.Length)].position;
-        player.GetComponent<SpriteRenderer>().enabled = true;
-        player.GetComponent<PlayerStats>().ResetStatsToDefault();
-        player.GetComponent<Health>().RefillHealth();
+
+        Vector3 respawnLocation = RespawnLocations[Random.Range(0, RespawnLocations.Length)].position;
+        Instantiate(characterPrefab, respawnLocation, Quaternion.identity, GameObject.Find("Adrian Stuff").transform);
     }
 }

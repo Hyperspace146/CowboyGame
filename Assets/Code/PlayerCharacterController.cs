@@ -18,6 +18,7 @@ public class PlayerCharacterController : MonoBehaviour {
     private PlayerInputHandler inputHandler; //get the inputhandler script so we have access to its methods from here
     private PlayerStats playerStats;
     private PlayerMelee playerMelee;
+    private PlayerWeaponManager playerWeaponManager;
     private GameObject crosshair;
     private Crosshair crosshairScript;
 
@@ -27,6 +28,11 @@ public class PlayerCharacterController : MonoBehaviour {
     private bool RollAvailable;
 
     public bool PlayerControlEnabled;
+    public bool PlayerActionsEnabled;
+
+    public InteractableCorpse CorpseBeingCarried;       // reference to the corpse object that this player is carrying
+    private List<Interactable> interactablesInRange;    // A list that contains all the interactable objects currently in range of the player
+    private Interactable closestInteractable;           // The interactable closest to the player out of all interactables in range (will have yellow outline)
 
     void Start() {
 
@@ -36,8 +42,12 @@ public class PlayerCharacterController : MonoBehaviour {
         RollInvulnerabilityTime = 5f;
         RollCooldownTime = 5f;
         //Debug.Log(RollCooldownTime + " " + RollInvulnerabilityTime);
+
+        CorpseBeingCarried = null;
+        interactablesInRange = new List<Interactable>();
         
         PlayerControlEnabled = true;
+        PlayerActionsEnabled = true;
         TimeOfLastRoll = float.NegativeInfinity; //this is so we have a roll available from the start
         //store the player's playerinputhandler script here
         //so that we have access to its methods
@@ -45,6 +55,7 @@ public class PlayerCharacterController : MonoBehaviour {
         inputHandler = GetComponent<PlayerInputHandler>();
         playerStats = GetComponent<PlayerStats>();
         playerMelee = GetComponent<PlayerMelee>();
+        playerWeaponManager = GetComponent<PlayerWeaponManager>();
         crosshair = GameObject.FindWithTag("Crosshair");
         crosshairScript = crosshair.GetComponent<Crosshair>();
 
@@ -70,7 +81,11 @@ public class PlayerCharacterController : MonoBehaviour {
     
         if (PlayerControlEnabled) {
             HandleCharacterMovement();
-            HandleCharacterActions();
+
+            if (PlayerActionsEnabled)
+            {
+                HandleCharacterActions();
+            }
             TestInputCommands();
         }
 
@@ -83,7 +98,8 @@ public class PlayerCharacterController : MonoBehaviour {
         //roll
         RollAvailable = (Time.time - TimeOfLastRoll) > RollCooldownTime;
         //Debug.Log("curr time: " + Time.time + ", TimeOfLastRoll: " + TimeOfLastRoll + " RollCooldownTime: " + RollCooldownTime);
-        if (inputHandler.GetRollInputDown() && RollAvailable) {
+        if (inputHandler.GetRollInputDown() && RollAvailable)
+        {
             TimeOfLastRoll = Time.time;
 
             //thrust player forward physically
@@ -94,11 +110,103 @@ public class PlayerCharacterController : MonoBehaviour {
         // Melee
         if (inputHandler.GetMeleeInputDown())
         {
-            Debug.Log("melee input pressed");
-            //PlayerControlEnabled = false;
-            //playerMelee.MeleeAttack();
+            playerMelee.MeleeAttack();
         }
-        
+
+        // Shooting
+        if (inputHandler.GetFireInputHeld())
+        {
+            playerWeaponManager.TryShoot();
+        }
+
+        // Reloading
+        if (inputHandler.GetReloadWeaponHeldDown())
+        {
+            playerWeaponManager.TryReloadWeapon();
+        }
+
+        // Interacting (includes interacting and dropping corpses)
+        if (inputHandler.GetInteractInputDown())
+        {
+            Debug.Log("interact");
+            // Interact with the interactable closest to us
+            if (closestInteractable != null)
+            {
+                closestInteractable.Interact(gameObject);
+                closestInteractable = null;
+            }
+
+            // If there is no interactable in range, and we are carrying a corpse, drop it
+            else if (CorpseBeingCarried != null)
+            {
+                CorpseBeingCarried.DropCorpse(gameObject);
+                CorpseBeingCarried = null;
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Check if the colliding object is an interactable; if so, add it to the list of interactables in range
+        Interactable interactable = collision.GetComponent<Interactable>();
+        if (interactable != null)
+        {
+            interactablesInRange.Add(interactable);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        // Remove the interactable (if it is one) from the list of interactables in range
+        Interactable interactable = collision.GetComponent<Interactable>();
+        if (interactable != null)
+        {
+            interactablesInRange.Remove(interactable);
+            interactable.GetComponent<SpriteOutline>().Color = Color.white;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        //// We check if the collider is an interactable, and if so, check if interact button is pressed
+        //// so we can interact with it
+        //// sidenote: getinteractinputdown is unreliable for some reason, so input held is used instead
+        //Interactable interactable = collision.GetComponent<Interactable>();
+        //if (interactable != null && PlayerActionsEnabled && inputHandler.GetInteractInputDown())
+        //{
+        //    interactable.Interact(gameObject);
+        //}
+
+        // While we are in range of at least one interactable, change the sprite outline color of only the closest 
+        // interactable to yellow, the others being white
+        if (interactablesInRange.Count >= 1)
+        {
+            // Find the interactable closest to us
+            closestInteractable = interactablesInRange[0];
+            float closestDistance = (interactablesInRange[0].transform.position - transform.position).magnitude;
+            for (int i = 1; i < interactablesInRange.Count; i++)
+            {
+                float distance = (interactablesInRange[i].transform.position - transform.position).magnitude;
+                if (distance < closestDistance)
+                {
+                    closestInteractable = interactablesInRange[i];
+                    closestDistance = distance;
+                }
+            }
+
+            // Change the closest interactable's outline to yellow while keeping the others white
+            foreach (Interactable inter in interactablesInRange)
+            {
+                if (inter.Equals(closestInteractable))
+                {
+                    inter.GetComponent<SpriteOutline>().Color = Color.yellow;
+                }
+                else
+                {
+                    inter.GetComponent<SpriteOutline>().Color = Color.white;
+                }
+            }
+        }
     }
 
 
@@ -178,10 +286,10 @@ public class PlayerCharacterController : MonoBehaviour {
            Debug.Log("melee pressed");
         }
 
-        if (inputHandler.GetMeleeInputHeld())
-        {
-           Debug.Log("melee held");
-        }
+        //if (inputHandler.GetMeleeInputHeld())
+        //{
+        //   Debug.Log("melee held");
+        //}
 
         if (inputHandler.GetMeleeInputUp())
         {
@@ -219,6 +327,13 @@ public class PlayerCharacterController : MonoBehaviour {
         //{
         //    Debug.Log("interact stopped");
         //}
+
+
+        //if (inputHandler.GetReloadWeaponHeldDown())
+        //{
+        //    Debug.Log("reload held");
+        //}
+
     }
 
 

@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
     public int BaseMaxHealth;
+    [Tooltip("If this GameObject is a player, it needs to know its character prefab so it can respawn.")]
+    public GameObject CharacterPrefab;
+    public UnityAction OnDeath;
 
     private int maxHealth;      
     private int health;         
@@ -19,9 +23,14 @@ public class Health : MonoBehaviour
         maxHealth = BaseMaxHealth;
         health = BaseMaxHealth;
         isDead = false;
+
+        if (BaseMaxHealth < 0)
+        {
+            Debug.LogWarning("Player Base Health is negative.");
+        }
     }
 
-    public void RefillHealth()
+    public void RefillAllHealth()
     {
         isDead = false;
         health = maxHealth;
@@ -29,10 +38,13 @@ public class Health : MonoBehaviour
 
     public void ChangeMaxHealth(int value)
     {
-        maxHealth += value;
-        if (maxHealth < 1)
+        if (!isDead)
         {
-            maxHealth = 1;
+            maxHealth += value;
+            if (maxHealth < 1)
+            {
+                maxHealth = 1;
+            }
         }
     }
 
@@ -43,7 +55,6 @@ public class Health : MonoBehaviour
         health = Mathf.Clamp(health, 0, maxHealth);
         if (health <= 0 && !isDead)
         {
-            isDead = true;
             Kill();
         }
     }
@@ -51,14 +62,26 @@ public class Health : MonoBehaviour
     // Handle the player's death
     void Kill()
     {
+        Debug.Log("killed");
+
+        isDead = true;
+
+        if (OnDeath != null)
+        {
+            OnDeath.Invoke();
+        }
+
         if (Equals(this.gameObject.tag, "Player"))
         {
-            // TODO: Disable any character control
-            // temp: disabling sprite renderer
-            spriteRenderer.enabled = false;
+            // Disable any character control
+            PlayerCharacterController playerCharacterController = GetComponent<PlayerCharacterController>();
+            playerCharacterController.PlayerActionsEnabled = false;
+            playerCharacterController.PlayerControlEnabled = false;
+
             // TODO: Play the death animation
-            // After a certain amount of respawn time, respawn in a certain location
-            respawnManager.RespawnPlayer(this.gameObject);
+
+            
+            respawnManager.RespawnPlayer(CharacterPrefab);
         }
         else
         {

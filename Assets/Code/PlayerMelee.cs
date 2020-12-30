@@ -19,11 +19,14 @@ public class PlayerMelee : MonoBehaviour
     public float MeleeHitboxOffset;
 
     private PlayerInputHandler inputHandler;
+    private PlayerCharacterController characterController;
 
     void Start()
     {
         inputHandler = GetComponent<PlayerInputHandler>();
+        characterController = GetComponent<PlayerCharacterController>();
         MeleeHitbox.GetComponent<ContactDamage>().Damage = Damage;
+        MeleeHitbox.enabled = false;
     }
 
     // Performs the melee attack by enabling the hitbox in the current look direction, all
@@ -37,14 +40,14 @@ public class PlayerMelee : MonoBehaviour
     // in real-time seconds
     IEnumerator MeleeAttackCoroutine()
     {
-        // TODO: make inactionable (to rolls, interact, shoot, another melee, anything but walk). In inputHandler?
+        characterController.PlayerActionsEnabled = false;
+
         // TODO: Apply knockback
 
         // Update the position of the melee hit box to be in the direction the player is facing
         // at the right offset. It's a circle collider, so we can disregard rotating the collider
-        MeleeHitbox.GetComponent<Transform>().position = inputHandler.GetLookInput().normalized
+        MeleeHitbox.GetComponent<Transform>().localPosition = inputHandler.GetLookInput().normalized
             * MeleeHitboxOffset;
-        Debug.Log(inputHandler.GetLookInput().normalized);
 
         yield return new WaitForSeconds(StartupTime);
 
@@ -62,6 +65,6 @@ public class PlayerMelee : MonoBehaviour
 
         yield return new WaitForSeconds(RecoveryTime);
 
-        // TODO: make actionable again
+        characterController.PlayerActionsEnabled = true;
     }
 }
