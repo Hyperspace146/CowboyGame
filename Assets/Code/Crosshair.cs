@@ -27,20 +27,18 @@ public class Crosshair : MonoBehaviour {
 
     }
 
-    void Update() {
-        //Debug.Log(transform.position.z);
-    }
-
     public Vector2 GetCrosshairPos() {
         return rb.position;
     }
 
+    
     // Update is called once per frame
     void FixedUpdate() {
+        
         //limit the crosshair's movement based on the camera's position
 
-        int Xrange = 20; //range represents the range around the camera which the crosshair is allowed to navigate
-        int Yrange = 20;
+        int Xrange = 10; //range represents the range around the camera which the crosshair is allowed to navigate
+        int Yrange = 10;
 
         float minY = cam.transform.position.y - Yrange;
         float maxY = cam.transform.position.y + Yrange;
@@ -54,9 +52,8 @@ public class Crosshair : MonoBehaviour {
         //float yPos = Mathf.Clamp(transform.position.y + pos.y, minY, maxY);
         float xPos = Mathf.Clamp(pos.x, minX, maxX);
         float yPos = Mathf.Clamp(pos.y, minY, maxY);
-        transform.position = new Vector2(xPos, yPos);
-        //Debug.Log("In-game coordinates: " + xPos + ", " + yPos + " " + transform.position.z);
-        
+        transform.position = new Vector3(xPos, yPos, 19);
+        // Debug.Log("Crosshair pos: " + xPos + ", " + yPos + " " + transform.position.z);
         
     }
 

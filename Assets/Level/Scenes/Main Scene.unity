@@ -147,6 +147,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 37853513007910778, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2214360098992049735, guid: 38262481a06bc4933b5f548d39640e09, type: 3}
+    - target: {fileID: 37853513007910778, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Keyboard + mouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 37853513007910778, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 678413878788882613, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
       propertyPath: m_Name
       value: Juda Stuff
@@ -155,9 +167,13 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1231637301668331602, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1949588609828155354, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 47.564102
+      value: 43.6
       objectReference: {fileID: 0}
     - target: {fileID: 1949588609828155354, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -207,6 +223,22 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3626646495917047175, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -50.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089931156952683457, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5256211637505934010, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_MaintainAspectRatioInSplitScreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5256211637505934010, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_JoinBehavior
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5893362993138316494, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.3
@@ -221,7 +253,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6372118229625877955, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 53.61
+      value: 52.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 6372118229625877955, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8100737476181002155, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8107244944549231365, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
       propertyPath: m_Enabled
@@ -233,7 +273,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8140796496448392259, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 50.37
+      value: 50.208
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140796496448392259, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.951
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174743137738909522, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb3a7b242dfac0a4484bdd933155e15f, type: 3}

@@ -30,6 +30,9 @@ public class PlayerCharacterController : MonoBehaviour {
 
     void Start() {
 
+        //Manually set the Z pos so that the player is always in front of the background
+        transform.position = new Vector3(transform.position.x, transform.position.y, 19);
+
         RollInvulnerabilityTime = 5f;
         RollCooldownTime = 5f;
         //Debug.Log(RollCooldownTime + " " + RollInvulnerabilityTime);
@@ -64,7 +67,7 @@ public class PlayerCharacterController : MonoBehaviour {
 
     //input
     void Update() {
-        
+    
         if (PlayerControlEnabled) {
             HandleCharacterMovement();
             HandleCharacterActions();
@@ -91,7 +94,7 @@ public class PlayerCharacterController : MonoBehaviour {
         // Melee
         if (inputHandler.GetMeleeInputDown())
         {
-            Debug.Log("hi");
+            Debug.Log("melee input pressed");
             //PlayerControlEnabled = false;
             //playerMelee.MeleeAttack();
         }
@@ -114,24 +117,62 @@ public class PlayerCharacterController : MonoBehaviour {
     }
 
 
+    void ShiftCamera() {
+        //have the camera follow the player
+        //implement functionality that makes it so the camera follows the crosshair(up to a certain extent)
+        float offset = .5f;
+ 
+        int range = 20; //specified range at which moving the crosshair will have an affect on the camera's position
+        float minX = rb.position.x - range;
+        float maxX = rb.position.x + range;
+        float minY = rb.position.y - range;
+        float maxY = rb.position.y + range;
+
+        float xPos = Mathf.Clamp((rb.position.x + crosshairPos.x) * offset, minX, maxX);
+        float yPos = Mathf.Clamp((rb.position.y + crosshairPos.y) * offset, minY, maxY);
+
+        cam.transform.position = new Vector3(xPos, yPos, 0);
+       
+    }
+    
+    void HandleCharacterMovement() {
+        
+        displacement = /*playerStats.speed*/ 10f * moveSpeedMultiplier * inputHandler.GetMoveInput();
+        crosshairPos = crosshairScript.GetCrosshairPos();
+    }
+
+    //physics
+    void FixedUpdate() {
+
+        //actually change the position of the character
+        //still a lil' confused by Time.fixedDeltaTime, but I'll figure it out later
+        rb.MovePosition(rb.position + displacement * Time.fixedDeltaTime);
+
+        ShiftCamera();
+
+    }
+
+
+
+
     private void TestInputCommands() {
          
          
-       /*  // if (inputHandler.GetFireInputDown()) {
-        //     Debug.Log("fire pressed");
-        // } */
+         if (inputHandler.GetFireInputDown()) {
+            Debug.Log("fire pressed");
+        } 
 
-        //if (inputHandler.GetFireInputHeld())
-        //{
-        //    Debug.Log("fire held");
-        //}
+        if (inputHandler.GetFireInputHeld())
+        {
+           Debug.Log("fire held");
+        }
 
-        //if (inputHandler.GetFireInputUp())
-        //{
-        //    Debug.Log("fire stopped");
-        //}
+        if (inputHandler.GetFireInputUp())
+        {
+           Debug.Log("fire stopped");
+        }
 
-
+        /*
         if (inputHandler.GetMeleeInputDown())
         {
            Debug.Log("melee pressed");
@@ -146,7 +187,7 @@ public class PlayerCharacterController : MonoBehaviour {
         {
            Debug.Log("melee stopped");
         }
-
+        */
 
 
         //if (inputHandler.GetRollInputDown())
@@ -180,42 +221,6 @@ public class PlayerCharacterController : MonoBehaviour {
         //}
     }
 
-
-    void ShiftCamera() {
-        //have the camera follow the player
-        //implement functionality that makes it so the camera follows the crosshair(up to a certain extent)
-        float offset = .5f;
-
- 
-        int range = 20; //specified range at which moving the crosshair will have an affect on the camera's position
-        float minX = rb.position.x - range;
-        float maxX = rb.position.x + range;
-        float minY = rb.position.y - range;
-        float maxY = rb.position.y + range;
-
-        float xPos = Mathf.Clamp((rb.position.x + crosshairPos.x) * offset, minX, maxX);
-        float yPos = Mathf.Clamp((rb.position.y + crosshairPos.y) * offset, minY, maxY);
-
-        cam.transform.position = new Vector3(xPos, yPos, cam.transform.position.z);
-       
-    }
-    
-    void HandleCharacterMovement() {
-        
-        displacement = /*playerStats.speed*/ 10f * moveSpeedMultiplier * inputHandler.GetMoveInput();
-        crosshairPos = crosshairScript.GetCrosshairPos();
-    }
-
-    //physics
-    void FixedUpdate() {
-        
-        //actually change the position of the character
-        //still a lil' confused by Time.fixedDeltaTime, but I'll figure it out later
-        rb.MovePosition(rb.position + displacement * Time.fixedDeltaTime);
-
-        ShiftCamera();
-
-    }
 
 
 
