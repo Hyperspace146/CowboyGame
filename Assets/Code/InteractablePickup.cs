@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(SpriteOutline), typeof(Interactable))]
+[RequireComponent(typeof(Interactable))]
 public class InteractablePickup : MonoBehaviour
 {
     [Tooltip("The amount of points the player's max health stat will increase by on pickup")]
