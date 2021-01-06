@@ -239,7 +239,7 @@ public class PlayerCharacterController : MonoBehaviour {
         float xPos = Mathf.Clamp((rb.position.x + crosshairPos.x) * offset, minX, maxX);
         float yPos = Mathf.Clamp((rb.position.y + crosshairPos.y) * offset, minY, maxY);
 
-        cam.transform.position = new Vector3(xPos, yPos, 0);
+        cam.transform.position = new Vector3(xPos, yPos, -10);
        
     }
     
@@ -266,19 +266,19 @@ public class PlayerCharacterController : MonoBehaviour {
     private void TestInputCommands() {
          
          
-         if (inputHandler.GetFireInputDown()) {
-            Debug.Log("fire pressed");
-        } 
+        //if (inputHandler.GetFireInputDown()) {
+        //    Debug.Log("fire pressed");
+        //} 
 
-        if (inputHandler.GetFireInputHeld())
-        {
-           Debug.Log("fire held");
-        }
+        //if (inputHandler.GetFireInputHeld())
+        //{
+        //   Debug.Log("fire held");
+        //}
 
-        if (inputHandler.GetFireInputUp())
-        {
-           Debug.Log("fire stopped");
-        }
+        //if (inputHandler.GetFireInputUp())
+        //{
+        //   Debug.Log("fire stopped");
+        //}
 
         /*
         if (inputHandler.GetMeleeInputDown())

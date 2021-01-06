@@ -19,43 +19,54 @@ public class InteractablePickup : MonoBehaviour
     [Tooltip("The amount of dollars the player will lose or receive on pickup")]
     public int MoneyAmount;
 
+    public event UnityAction<GameObject> OnPurchase;
+
     private void Start()
     {
         // Subscribe to OnInteract so that when the player interacts with the pickup, we can change
         // their stats
-        GetComponent<Interactable>().OnInteract += ChangePlayerStats;
+        GetComponent<Interactable>().OnInteract += TryChangePlayerStats;
     }
 
-    private void ChangePlayerStats(GameObject player)
+    private void TryChangePlayerStats(GameObject player)
     {
         Health playerHealth = player.GetComponent<Health>();
         PlayerStats playerStats = player.GetComponent<PlayerStats>();
 
-        // Apply all stat/health changes if non-zero
-        if (MaxHealthBuff != 0)
+        // Only grant them the stat changes if they can afford the item
+        if (playerStats.money + MoneyAmount >= 0)
         {
-            playerHealth.ChangeMaxHealth(MaxHealthBuff);
+            if (OnPurchase != null)
+            {
+                OnPurchase.Invoke(this.gameObject);
+            }
+
+            // Apply all stat/health changes if non-zero
+            if (MaxHealthBuff != 0)
+            {
+                playerHealth.ChangeMaxHealth(MaxHealthBuff);
+            }
+            if (HealthRegained != 0)
+            {
+                playerHealth.ChangeHealth(HealthRegained);
+            }
+            if (AttackStatBuff != 0)
+            {
+                playerStats.ChangeAttackStat(AttackStatBuff);
+            }
+            if (DefenseStatBuff != 0)
+            {
+                playerStats.ChangeDefenseStat(DefenseStatBuff);
+            }
+            if (SpeedStatBuff != 0)
+            {
+                playerStats.ChangeSpeedStat(SpeedStatBuff);
+            }
+            if (MoneyAmount != 0)
+            {
+                playerStats.ChangeMoneySum(MoneyAmount);
+            }
+            Destroy(this.gameObject);
         }
-        if (HealthRegained != 0)
-        {
-            playerHealth.ChangeHealth(HealthRegained);
-        }
-        if (AttackStatBuff != 0)
-        {
-            playerStats.ChangeAttackStat(AttackStatBuff);
-        }
-        if (DefenseStatBuff != 0)
-        {
-            playerStats.ChangeDefenseStat(DefenseStatBuff);
-        }
-        if (SpeedStatBuff != 0)
-        {
-            playerStats.ChangeSpeedStat(SpeedStatBuff);
-        }
-        if (MoneyAmount != 0)
-        {
-            playerStats.ChangeMoneySum(MoneyAmount);
-        }
-        Destroy(this.gameObject);
     }
 }

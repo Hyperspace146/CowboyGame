@@ -7,6 +7,8 @@ public class InteractableBarrel : MonoBehaviour
 {
     [Tooltip("How fast the barrel rolls.")]
     public float BarrelSpeed;
+    [Tooltip("The solid, non-trigger collider for this barrel.")]
+    public BoxCollider2D SolidCollider;
 
     private Rigidbody2D rb;
     private Vector2 rollDirection;  // The direction the barrel is rolling in
@@ -55,33 +57,27 @@ public class InteractableBarrel : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 0, 180);
         }
 
-        // Set the barrel in motion for a time in the determined direction
-        rb.velocity = (rollDirection * BarrelSpeed);
+        // Only if casting in the direction that the barrel would roll towards encounters no hits
+        // (no obstructing objects), roll the barrel
+        float castDistance = 0.1f;
+        if (SolidCollider.Cast(rollDirection, new RaycastHit2D[1], castDistance, true) == 0)
+        {
+            // Set the barrel in motion for a time in the determined direction
+            rb.velocity = (rollDirection * BarrelSpeed);
+        }
     }
 
-    // If we collide into anything, stop moving
-    private void OnCollisionEnter2D(Collision2D collision)
+    // This method is called when the child object with the solid hitbox collides with something.
+    // Here, we check if the barrel had run into an object in the direction it was moving; if so,
+    // stop the barrel in its tracks
+    void ChildOnCollisionEnter2D(Collision2D collision)
     {
-        BoxCollider2D barrelCollider = GetComponentInChildren<BoxCollider2D>();  // Solid hitbox is stored in child object
-        float leftSideOfCollider = barrelCollider.bounds.center.x - barrelCollider.bounds.extents.x;
-        float rightSideOfCollider = barrelCollider.bounds.center.x + barrelCollider.bounds.extents.x;
-        float topSideOfCollider = barrelCollider.bounds.center.y + barrelCollider.bounds.extents.y;
-        float bottomSideOfCollider = barrelCollider.bounds.center.y - barrelCollider.bounds.extents.y;
-
-        Vector2 contactPoint = collision.GetContact(0).point;
-
-        Debug.Log(contactPoint);
-
-        Debug.Log(topSideOfCollider);
-
-        // If we have a collision on the side of the collider in which we are rolling towards, stop
-        // the barrel from moving
-        if (contactPoint.x == leftSideOfCollider && rollDirection == Vector2.left
-            || contactPoint.x == rightSideOfCollider && rollDirection == Vector2.right
-            || contactPoint.y == topSideOfCollider && rollDirection == Vector2.up
-            || contactPoint.x == bottomSideOfCollider && rollDirection == Vector2.down)
+        // If the cast in the direction that the barrel is rolling towards encounters any hits, stop
+        // the barrel from rolling
+        float castDistance = 0.1f;
+        if (SolidCollider.Cast(rollDirection, new RaycastHit2D[1], castDistance, true) > 0)
         {
-            rb.velocity = Vector3.zero;
+            rb.velocity = Vector2.zero;
         }
     }
 }
