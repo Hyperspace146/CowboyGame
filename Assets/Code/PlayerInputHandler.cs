@@ -51,6 +51,18 @@ public class PlayerInputHandler : MonoBehaviour {
 
     void Update() {
         DetectInput();
+
+        //reset the "pressed" variables to false at this point
+        //(We want the "pressed" variables to only be true for one frame)
+        resetPressedButtons();
+
+    }
+
+    void resetPressedButtons() {
+        shootPressed = false;
+        meleePressed = false;
+        interactPressed = false;
+        rollPressed = false;
     }
 
     //this method is responsible for updating our move and rotate values according to input
@@ -62,7 +74,7 @@ public class PlayerInputHandler : MonoBehaviour {
         DetectShootInput();
         DetectInteractInput();
         DetectRollInput();
-
+        DetectReload();
    }
 
    private void DetectMoveInput() {
@@ -89,7 +101,6 @@ public class PlayerInputHandler : MonoBehaviour {
         controls.Gameplay.PressShoot.started += context => shootPressed = true;
         controls.Gameplay.HoldShoot.performed += context => shootHeldDown = true;
         controls.Gameplay.HoldShoot.canceled += context => shootHeldDown = false;
-        controls.Gameplay.PressShoot.canceled += context => shootPressed = false;
 
    }
 
@@ -110,7 +121,7 @@ public class PlayerInputHandler : MonoBehaviour {
         controls.Gameplay.PressMelee.started += context => meleePressed = true; 
         controls.Gameplay.HoldMelee.performed += context => meleeHeld = true;
         controls.Gameplay.HoldMelee.canceled += context => meleeHeld = false;
-        controls.Gameplay.PressMelee.canceled += context => meleePressed = false;
+
    } 
 
    public bool GetMeleeInputDown() {
@@ -127,10 +138,8 @@ public class PlayerInputHandler : MonoBehaviour {
 
    private void DetectInteractInput() {
         controls.Gameplay.PressInteract.started += context => interactPressed = true;
-
         controls.Gameplay.HoldInteract.performed += context => interactHeld = true;
         controls.Gameplay.HoldInteract.canceled += context => interactHeld = false;
-        controls.Gameplay.PressInteract.canceled += context => interactPressed = false;
    }
 
    public bool GetInteractInputDown() {
@@ -149,7 +158,6 @@ public class PlayerInputHandler : MonoBehaviour {
         controls.Gameplay.PressRoll.started += context => rollPressed = true;
         controls.Gameplay.HoldRoll.performed += context => rollHeld = true;
         controls.Gameplay.HoldRoll.canceled += context => rollHeld = false;
-        controls.Gameplay.PressRoll.canceled += context => rollPressed = false;
    }
 
    public bool GetRollInputDown() {

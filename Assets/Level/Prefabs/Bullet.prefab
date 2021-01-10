@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 237406443473970908}
   - component: {fileID: 5373077315836118022}
   - component: {fileID: -4822013370736929301}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4318480236218512917}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.76, y: 1.21, z: 0}
-  m_LocalScale: {x: 6.2607102, y: 6.2607102, z: 6.2607102}
+  m_LocalScale: {x: 0.8512061, y: 0.8512061, z: 0.8512061}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0

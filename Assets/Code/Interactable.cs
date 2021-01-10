@@ -10,31 +10,12 @@ public class Interactable : MonoBehaviour
     // of this interactable
     public event UnityAction<GameObject> OnInteract;
 
-    private SpriteOutline spriteOutline;
-
-    void Start()
+    // Method called by the player gameobject that is interacting with this interactable
+    public void Interact(GameObject playerInteracting)
     {
-        spriteOutline = GetComponent<SpriteOutline>();
-    }
-
-    // If in range of the interactable and the player inputs Interact, invoke any OnInteract stuff
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        PlayerInputHandler playerInput = collision.GetComponent<PlayerInputHandler>();
-        if (playerInput != null && playerInput.GetInteractInputDown() && OnInteract != null)
+        if (OnInteract != null)
         {
-            OnInteract.Invoke(collision.gameObject);
+            OnInteract.Invoke(playerInteracting);
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        spriteOutline.Color = Color.yellow;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        spriteOutline.Color = Color.white;
-    }
-
 }

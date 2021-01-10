@@ -12,7 +12,7 @@ public class ContactDamage : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Health victimHealth = collision.GetComponent<Health>();
+        Health victimHealth = collision.GetComponentInParent<Health>();
         if (victimHealth != null)
         {
             victimHealth.ChangeHealth(-Damage);
