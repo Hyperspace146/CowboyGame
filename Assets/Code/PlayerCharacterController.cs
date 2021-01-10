@@ -24,6 +24,7 @@ public class PlayerCharacterController : MonoBehaviour {
 
     public float RollInvulnerabilityTime; //time that player is invulnerable while rolling
     public float RollCooldownTime;
+    public float RollDistance;
     private float TimeOfLastRoll;
     private bool RollAvailable;
 
@@ -32,9 +33,10 @@ public class PlayerCharacterController : MonoBehaviour {
 
     void Start() {
 
-        RollInvulnerabilityTime = 5f;
-        RollCooldownTime = 5f;
-        //Debug.Log(RollCooldownTime + " " + RollInvulnerabilityTime);
+        RollInvulnerabilityTime = .4f;
+        RollCooldownTime = 2f;
+        RollDistance = 3f;
+        //Debug.Log(RollCooldownTime + " " + RollInvulnerabilityTime + " " + RollDuration);
         
         PlayerControlEnabled = true;
         PlayerActionsEnabled = true;
@@ -51,14 +53,12 @@ public class PlayerCharacterController : MonoBehaviour {
 
         //when the "InteractPressedOnInteractable" event is triggered, the interact method is initiated
         //Interactable.script.InteractableInRange += interact;
-        
 
     }
 
     public void DisableCharacterControl() {
         PlayerControlEnabled = false;
     }
-
 
     /*
     PlayerCharacterController - handles movement using the info from PlayerInputHandler
@@ -85,16 +85,25 @@ public class PlayerCharacterController : MonoBehaviour {
 
     void HandleCharacterActions() {
         
-        //roll
+        //ROLL | JOSEPH 
         RollAvailable = (Time.time - TimeOfLastRoll) > RollCooldownTime;
         //Debug.Log("curr time: " + Time.time + ", TimeOfLastRoll: " + TimeOfLastRoll + " RollCooldownTime: " + RollCooldownTime);
         if (inputHandler.GetRollInputDown() && RollAvailable)
         {
-            TimeOfLastRoll = Time.time;
 
-            //thrust player forward physically
-            rb.AddForce(inputHandler.GetMoveInput() * 2000, ForceMode2D.Force);
-            StartCoroutine(BecomeInvulnerableForTime());
+            //Cooldown
+            TimeOfLastRoll = Time.time;
+            
+            //Performing the roll
+            if(displacement.magnitude != 0) {
+                StartCoroutine(rollEffects(true));
+            }
+            else {
+                StartCoroutine(rollEffects(false));
+            }
+            
+            //rb.AddForce(inputHandler.GetMoveInput() * RollDistance, ForceMode2D.Force);
+
         }
 
         // Melee
@@ -106,7 +115,7 @@ public class PlayerCharacterController : MonoBehaviour {
         // Shooting
         if (inputHandler.GetFireInputHeld())
         {
-            playerWeaponManager.TryShoot();
+            playerWeaponManager.TryShoot();                               
         }
 
         // Reloading
@@ -117,21 +126,43 @@ public class PlayerCharacterController : MonoBehaviour {
 
     }
 
-
     //coroutine - become invulnerable for an amount of time
     //also sets player back to being vulnerable once time is over
-    IEnumerator BecomeInvulnerableForTime() {
+    IEnumerator rollEffects(bool isMoving) {
+            
+            /*
+             * Zero the dispacement vector while movement is disabled
+             * Manually set the velocity (rb.velocity) based on last inputed direction (roll in the direction of corsshair for now)
+             * Reset the velocity, and unzero the displacement
+            */
+        
+        //zero the displacement
+        
 
         //****NOTE: NEED PLAYER AND OBJECTS THAT THE PLAYER IS INVULNERABLE FROM TO HAVE LAYERS(SET IN UNITY INSPECTOR)
         Physics2D.IgnoreLayerCollision(8, 9, true); //set player invulnerable to bullets/enemy-fire
         Debug.Log("Player is now invulnerable");
+        PlayerControlEnabled = false; PlayerActionsEnabled = false;
+
+        //velocity applied
+        if (isMoving) {
+            rb.velocity = displacement.normalized * (RollDistance / RollInvulnerabilityTime);
+        }
+        else {
+            Vector2 crosshairDir = (inputHandler.GetMousePosition() -
+                (Vector2) Camera.main.WorldToScreenPoint(rb.position));
+
+            rb.velocity = crosshairDir.normalized * (RollDistance / RollInvulnerabilityTime);
+        }
+
         yield return new WaitForSeconds(RollInvulnerabilityTime);
+
+
+        Physics2D.IgnoreLayerCollision(8, 9, false); //set player back to being vulnerable to bullets/enemy-fire
         Debug.Log("Player is vulnerable again");
-        //set player back to being invulnerable
-        Physics2D.IgnoreLayerCollision(8, 9, true); //set player back to being vulnerable to bullets/enemy-fire
+        PlayerControlEnabled = true; PlayerActionsEnabled = true;
 
     }
-
 
     private void TestInputCommands() {
 
@@ -206,7 +237,6 @@ public class PlayerCharacterController : MonoBehaviour {
 
     }
 
-
     void ShiftCamera() {
         //have the camera follow the player
         //implement functionality that makes it so the camera follows the crosshair(up to a certain extent)
@@ -237,8 +267,10 @@ public class PlayerCharacterController : MonoBehaviour {
         
         //actually change the position of the character
         //still a lil' confused by Time.fixedDeltaTime, but I'll figure it out later
-        rb.MovePosition(rb.position + displacement * Time.fixedDeltaTime);
-
+        if(PlayerControlEnabled == true) 
+        {
+            rb.MovePosition(rb.position + displacement * Time.fixedDeltaTime);
+        }
         ShiftCamera();
 
     }
