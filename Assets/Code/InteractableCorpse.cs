@@ -42,7 +42,7 @@ public class InteractableCorpse : MonoBehaviour
     {
         Debug.Log("picked up");
 
-        playerPickingUp.GetComponent<PlayerCharacterController>().CorpseBeingCarried = this;
+        //playerPickingUp.GetComponent<PlayerCharacterController>().CorpseBeingCarried = this;
 
         // TODO: play corpse pickup animation
 

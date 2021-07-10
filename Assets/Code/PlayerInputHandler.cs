@@ -2,189 +2,142 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
+using static UnityEngine.InputSystem.InputAction;
 
-public class PlayerInputHandler : MonoBehaviour {
+[RequireComponent(typeof(PlayerInput))]
+public class PlayerInputHandler : MonoBehaviour
+{
+    public Vector2 MoveInput { get; private set; } = Vector2.zero;
+    public Vector2 LookInput { get; private set; } = Vector2.zero;
+    public UnityEvent OnRollInputDown;
+    public UnityEvent OnRollInputHeld;
+    public UnityEvent<double> OnRollInputUp;
+    public UnityEvent OnShootInputDown;
+    public UnityEvent OnShootInputHeld;
+    public UnityEvent<double> OnShootInputUp;
+    public UnityEvent OnReloadInputDown;
+    public UnityEvent OnReloadInputHeld;
+    public UnityEvent<double> OnReloadInputUp;
+    public UnityEvent OnMeleeInputDown;
+    public UnityEvent OnMeleeInputHeld;
+    public UnityEvent<double> OnMeleeInputUp;
+    public UnityEvent OnInteractInputDown;
+    public UnityEvent OnInteractInputHeld;
+    public UnityEvent<double> OnInteractInputUp;
+    public Transform ShootPoint;  /* The location that the bullets spawn from. */
 
-    //we need an instance of the input system asset that we made
-    PlayerControls controls;
-    Vector2 move;
-    Vector2 crossHair;
+    public bool ActionInputEnabled = true;
+    public bool MoveInputEnabled = true;
 
-    private bool shootPressed;
-    private bool shootHeldDown;
+    private bool rollInputHeld;
+    private bool shootInputHeld;
+    private bool reloadInputHeld;
+    private bool meleeInputHeld;
+    private bool interactInputHeld;
 
-    private bool meleePressed;
-    private bool meleeHeld;
-
-    private bool interactPressed;
-    private bool interactHeld;
-
-    private bool rollPressed;
-    private bool rollHeld;
-
-    private bool ReloadPressed;
-
-    //PlayerInputHandler - handles inputs and applies things like sensitivity, invert, etc. 
-    //***these methods will be called within an update() method of another class
-
-    //awake() is called even before start is called
-    void Awake() {
-        
-        controls = new PlayerControls();            
-        controls.Gameplay.Enable(); //starts the controls
-
-    }
-
-    public Vector2 GetMoveInput() {
-        return move;
-    }
-    
-    public Vector2 GetMousePosition() {
-        return crossHair;
-    }
-
-    // Returns the vector pointing from the player's position to the crosshair in screenspace.
-    public Vector2 GetLookInput()
+    private void Update()
     {
-        return GetMousePosition() - (Vector2) Camera.main.WorldToScreenPoint(transform.position);
+        if (rollInputHeld && OnRollInputHeld != null)
+            OnRollInputHeld.Invoke();
+        if (shootInputHeld && OnShootInputHeld != null)
+            OnShootInputHeld.Invoke();
+        if (reloadInputHeld && OnReloadInputHeld != null)
+            OnReloadInputHeld.Invoke();
+        if (meleeInputHeld && OnMeleeInputHeld != null)
+            OnMeleeInputHeld.Invoke();
+        if (interactInputHeld && OnInteractInputHeld != null)
+            OnInteractInputHeld.Invoke();
     }
 
-    void Update() {
-        DetectInput();
-
-        //reset the "pressed" variables to false at this point
-        //(We want the "pressed" variables to only be true for one frame)
-        resetPressedButtons();
-
+    public void SetMoveInput(CallbackContext callbackContext)
+    {
+        MoveInput = callbackContext.ReadValue<Vector2>();
     }
 
-    void resetPressedButtons() {
-        shootPressed = false;
-        meleePressed = false;
-        interactPressed = false;
-        rollPressed = false;
+    /* 
+     * Determines the normalized Vector2 representing which direction the character is aiming
+     * in. Requires additional calculation based on what kind of device was used for input.
+     */
+    public void SetLookInput(CallbackContext callbackContext)
+    {
+        // If current controller is mouse and keyboard, then the callback's Vector2 represents the 
+        // mouse's absolute position. Subtract to find the vector pointing from the player to 
+        // the mouse's position.
+        if (callbackContext.control.device.name == "Mouse")
+        {
+            LookInput = (Vector2) Camera.main.ScreenToWorldPoint(callbackContext.ReadValue<Vector2>())
+                - (Vector2) ShootPoint.transform.position;
+            LookInput = LookInput.normalized;
+        }
+
+        // If gamepad, then the Vector2 should be the stick's input, (0,0) being the stick at neutral.
+        // No need for more calculation (needs testing to see if this is right)
+        else if (callbackContext.control.device.name == "Gamepad")
+        {
+            LookInput = callbackContext.ReadValue<Vector2>();
+        }
+
+        else
+        {
+            Debug.LogWarning("Unsupported device found setting character look input.");
+        }
     }
 
-    //this method is responsible for updating our move and rotate values according to input
-    private void DetectInput() {
-       
-        DetectMoveInput();
-        DetectCrosshairInput();
-        DetectMeleeInput();
-        DetectShootInput();
-        DetectInteractInput();
-        DetectRollInput();
-        DetectReload();
-   }
 
-   private void DetectMoveInput() {
-                                                           //context provides information from thumbstick(player input)
-        controls.Gameplay.Move.performed += context => move = context.ReadValue<Vector2>();
-              //.Actionmap.Action 
-                               //Callbacks: 
-                               //.started
-                               //.performed
-                               //.canceled
-        //those three are callbacks, which means we can "add" functions/methods
-        //to them which get triggered when the action is performed        
-        controls.Gameplay.Move.canceled += context => move = Vector2.zero; //reset value when not moving thumbstick
+    /* --- ACTIONS --- */
 
-   }
+    public void SetRollInput(CallbackContext callbackContext)
+    {
+        // This applies to all the action callbacks: if a call
+        if (ActionInputEnabled)
+        {
+            if (callbackContext.started && OnRollInputDown != null)
+                OnRollInputDown.Invoke();
+            else if (callbackContext.canceled && OnRollInputUp != null)
+                OnRollInputUp.Invoke(callbackContext.duration);
+            rollInputHeld = callbackContext.started || !callbackContext.canceled;
+        }
+        // issue: called multiple time per button press+release, so up is invoked multiple times
+        else if (callbackContext.phase != InputActionPhase.Waiting)
+        {
+            OnInteractInputUp.Invoke(callbackContext.duration);
+        }
+    }
 
-   private void DetectCrosshairInput() {
-        controls.Gameplay.Rotate.performed += context => crossHair = context.ReadValue<Vector2>();
-        controls.Gameplay.Rotate.canceled += context => crossHair = Vector2.zero;//new Vector2(1f, 1f); //reset value when not moving thumbstick
-   }
+    public void OnShootInput(CallbackContext callbackContext)
+    {
+        if (callbackContext.started && OnShootInputDown != null)
+            OnShootInputDown.Invoke();
+        else if (callbackContext.canceled && OnShootInputUp != null)
+            OnShootInputUp.Invoke(callbackContext.duration);
+        shootInputHeld = callbackContext.started || !callbackContext.canceled;
+    }
 
-   private void DetectShootInput() {
+    public void SetReloadInput(CallbackContext callbackContext)
+    {
+        if (callbackContext.started && OnReloadInputDown != null)
+            OnReloadInputDown.Invoke();
+        else if (callbackContext.canceled && OnReloadInputUp != null)
+            OnReloadInputUp.Invoke(callbackContext.duration);
+        reloadInputHeld = callbackContext.started || !callbackContext.canceled;
+    }
 
-        controls.Gameplay.PressShoot.started += context => shootPressed = true;
-        controls.Gameplay.HoldShoot.performed += context => shootHeldDown = true;
-        controls.Gameplay.HoldShoot.canceled += context => shootHeldDown = false;
+    public void SetMeleeInput(CallbackContext callbackContext)
+    {
+        if (callbackContext.started && OnMeleeInputDown != null)
+            OnMeleeInputDown.Invoke();
+        else if (callbackContext.canceled && OnMeleeInputUp != null)
+            OnMeleeInputUp.Invoke(callbackContext.duration);
+        meleeInputHeld = callbackContext.started || !callbackContext.canceled;
+    }
 
-   }
-
-   public bool GetFireInputDown() {
-       return shootPressed;
-   }
-
-   public bool GetFireInputHeld() {
-       return shootHeldDown;
-   }
-
-   public bool GetFireInputUp() {
-       return !shootPressed && !shootHeldDown;
-   }
-
-   private void DetectMeleeInput() {
-  
-        controls.Gameplay.PressMelee.started += context => meleePressed = true; 
-        controls.Gameplay.HoldMelee.performed += context => meleeHeld = true;
-        controls.Gameplay.HoldMelee.canceled += context => meleeHeld = false;
-
-   } 
-
-   public bool GetMeleeInputDown() {
-       return meleePressed;
-   }
-
-   public bool GetMeleeInputHeld() {
-       return meleeHeld;
-   }
-
-   public bool GetMeleeInputUp() {
-       return !meleePressed && !meleeHeld;
-   }
-
-   private void DetectInteractInput() {
-        controls.Gameplay.PressInteract.started += context => interactPressed = true;
-        controls.Gameplay.HoldInteract.performed += context => interactHeld = true;
-        controls.Gameplay.HoldInteract.canceled += context => interactHeld = false;
-   }
-
-   public bool GetInteractInputDown() {
-       return interactPressed;
-   }
-
-   public bool GetInteractInputHeld() {
-       return interactHeld;
-   }
-
-   public bool GetInteractInputUp() {
-       return !interactPressed && !interactHeld;
-   }
-
-   private void DetectRollInput() {
-        controls.Gameplay.PressRoll.started += context => rollPressed = true;
-        controls.Gameplay.HoldRoll.performed += context => rollHeld = true;
-        controls.Gameplay.HoldRoll.canceled += context => rollHeld = false;
-   }
-
-   public bool GetRollInputDown() {
-       return rollPressed;
-   }
-
-   public bool GetRollInputHeld() {
-       return rollHeld;
-   }
-
-   public bool GetRollInputUp() {
-       return !rollPressed && !rollHeld;
-   }
-
-   private void DetectReload() {
-        
-        controls.Gameplay.HoldReload.performed += context => ReloadPressed = true;
-        controls.Gameplay.HoldReload.canceled += context => ReloadPressed = false;
-
-   }
-
-   public bool GetReloadWeaponHeldDown() {
-       return ReloadPressed;
-   }
-
-
-
-
-
+    public void SetInteractInput(CallbackContext callbackContext)
+    {
+        if (callbackContext.started && OnInteractInputDown != null)
+            OnInteractInputDown.Invoke();
+        else if (callbackContext.canceled && OnInteractInputUp != null)
+            OnInteractInputUp.Invoke(callbackContext.duration);
+        interactInputHeld = callbackContext.started || !callbackContext.canceled;
+    }
 }

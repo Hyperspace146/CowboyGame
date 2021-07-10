@@ -42,6 +42,10 @@ public class PlayerWeaponManager : MonoBehaviour
         characterController = GetComponent<PlayerCharacterController>();
     }
 
+    /* 
+     *  TryShoot will fire a projectile if able to, depending on current ammo and if the shot delay allows.
+     *  Returns true if projectile shot, false otherwise.
+     */
     public void TryShoot()
     {
         // Shoot if able to (not reloading, has ammo, and the time delay between shots has passed)
@@ -103,8 +107,7 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         // Get the vector pointing from the gun to the crosshair by subtracting mouse position and
         // the shoot point (gun) position
-        Vector2 currentAimVector = (inputHandler.GetMousePosition() - 
-            (Vector2) Camera.main.WorldToScreenPoint(ShootPoint.position));
+        Vector2 currentAimVector = inputHandler.LookInput;
 
         // Turn that vector into an angle
         float currentAimAngle = Mathf.Atan2(currentAimVector.y, currentAimVector.x) * Mathf.Rad2Deg;
@@ -128,11 +131,11 @@ public class PlayerWeaponManager : MonoBehaviour
     //"IEnumerator" indicates that this function is a coroutine
     public IEnumerator ReloadWeaponCoroutine() 
     {
-        characterController.PlayerActionsEnabled = false;
+        inputHandler.ActionInputEnabled = false;
         // Wait for the specified reload time before refilling the clip
         yield return new WaitForSeconds(ReloadTime);
         CurrentAmmo = ClipSize;
-        characterController.PlayerActionsEnabled = true;
+        inputHandler.ActionInputEnabled = true;
     }
 
 }

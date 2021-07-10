@@ -8,10 +8,12 @@ public class Health : MonoBehaviour
     public int BaseMaxHealth;
     [Tooltip("If this GameObject is a player, it needs to know its character prefab so it can respawn.")]
     public GameObject CharacterPrefab;
-    public UnityAction OnDeath;
 
-    private int maxHealth;      
-    private int health;         
+    public event UnityAction OnHealthChange;
+    public event UnityAction OnDeath;
+
+    public int maxHealth { get; private set; }
+    public int health { get; private set; }
     private bool isDead;        
     RespawnManager respawnManager;
     SpriteRenderer spriteRenderer;  // temp
@@ -40,6 +42,11 @@ public class Health : MonoBehaviour
     {
         if (!isDead)
         {
+            if (OnHealthChange != null)
+            {
+                OnHealthChange.Invoke();
+            }
+
             maxHealth += value;
             if (maxHealth < 1)
             {
@@ -51,6 +58,11 @@ public class Health : MonoBehaviour
     // Change the player's health by the given value 
     public void ChangeHealth(int value)
     {
+        if (OnHealthChange != null)
+        {
+            OnHealthChange.Invoke();
+        }
+
         health += value;
         health = Mathf.Clamp(health, 0, maxHealth);
         if (health <= 0 && !isDead)
@@ -74,9 +86,9 @@ public class Health : MonoBehaviour
         if (Equals(this.gameObject.tag, "Player"))
         {
             // Disable any character control
-            PlayerCharacterController playerCharacterController = GetComponent<PlayerCharacterController>();
-            playerCharacterController.PlayerActionsEnabled = false;
-            playerCharacterController.PlayerControlEnabled = false;
+            PlayerInputHandler inputHandler = GetComponent<PlayerInputHandler>();
+            inputHandler.ActionInputEnabled = false;
+            inputHandler.MoveInputEnabled = false;
 
             // TODO: Play the death animation
 

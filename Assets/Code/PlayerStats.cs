@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -16,7 +17,9 @@ public class PlayerStats : MonoBehaviour
     public int defense { get; private set; }   
     public int speed { get; private set; }    
     public int money { get; private set; }      
-    public int bounty { get; private set; }     
+    public int bounty { get; private set; }
+
+    public event UnityAction OnStatChange;
 
     void Start()
     {
@@ -34,6 +37,11 @@ public class PlayerStats : MonoBehaviour
         {
             attack = 1;
         }
+
+        if (OnStatChange != null)
+        {
+            OnStatChange.Invoke();
+        }
     }
 
     public void ChangeDefenseStat(int value)
@@ -42,6 +50,11 @@ public class PlayerStats : MonoBehaviour
         if (defense < 1)
         {
             defense = 1;
+        }
+
+        if (OnStatChange != null)
+        {
+            OnStatChange.Invoke();
         }
     }
 
@@ -52,14 +65,23 @@ public class PlayerStats : MonoBehaviour
         {
             speed = 1;
         }
+
+        if (OnStatChange != null)
+        {
+            OnStatChange.Invoke();
+        }
     }
 
     // Returns false and does not deduct money if it would lead to a negative sum of money
     public bool ChangeMoneySum(int value)
     {
-        if (money + value > 0)
+        if (money + value >= 0)
         {
             money += value;
+            if (OnStatChange != null)
+            {
+                OnStatChange.Invoke();
+            }
             return true;
         }
         return false;
@@ -71,6 +93,11 @@ public class PlayerStats : MonoBehaviour
         if (bounty < 0)
         {
             bounty = 0;
+        }
+
+        if (OnStatChange != null)
+        {
+            OnStatChange.Invoke();
         }
     }
 

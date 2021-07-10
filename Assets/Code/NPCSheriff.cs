@@ -12,7 +12,7 @@ public class NPCSheriff : MonoBehaviour
     
     void TradeCorpseWithPlayer(GameObject player)
     {
-        InteractableCorpse corpse = player.GetComponent<PlayerCharacterController>().CorpseBeingCarried;
+        /*InteractableCorpse corpse = player.GetComponent<PlayerCharacterController>().CorpseBeingCarried;
         if (corpse != null)
         {
             Debug.Log("thnx 4 corpse");
@@ -27,6 +27,6 @@ public class NPCSheriff : MonoBehaviour
 
             // Delete the corpse object
             Destroy(corpse);
-        }
+        }*/
     }
 }
