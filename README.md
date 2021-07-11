@@ -1,5 +1,8 @@
 # Cowboy Game
 
+
+Intermission between games for shopping
+
 <h3>Style Guide Stuff:</h3>
 <ul>
   <li>documentation on top of class explaining the purpose of the class</li>
