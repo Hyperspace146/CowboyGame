@@ -8,8 +8,12 @@ using static UnityEngine.InputSystem.InputAction;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerInputHandler : MonoBehaviour
 {
+    /* Represents the direction the player wishes to move in. */
     public Vector2 MoveInput { get; private set; } = Vector2.zero;
-    public Vector2 LookInput { get; private set; } = Vector2.zero;
+
+    /* The vector pointing from the player character to the crosshair. Normalized. */
+    public Vector2 LookInput { get; private set; } = Vector2.zero;  
+
     public UnityEvent OnRollInputDown;
     public UnityEvent OnRollInputHeld;
     public UnityEvent<double> OnRollInputUp;
@@ -68,16 +72,13 @@ public class PlayerInputHandler : MonoBehaviour
         {
             LookInput = (Vector2) Camera.main.ScreenToWorldPoint(callbackContext.ReadValue<Vector2>())
                 - (Vector2) ShootPoint.transform.position;
-            LookInput = LookInput.normalized;
         }
-
         // If gamepad, then the Vector2 should be the stick's input, (0,0) being the stick at neutral.
         // No need for more calculation (needs testing to see if this is right)
         else if (callbackContext.control.device.name == "Gamepad")
         {
             LookInput = callbackContext.ReadValue<Vector2>();
         }
-
         else
         {
             Debug.LogWarning("Unsupported device found setting character look input.");
@@ -85,8 +86,9 @@ public class PlayerInputHandler : MonoBehaviour
     }
 
 
-    /* --- ACTIONS --- */
-
+    /* 
+     *      ----------- ACTIONS -----------
+     */
     public void SetRollInput(CallbackContext callbackContext)
     {
         // This applies to all the action callbacks: if a call
