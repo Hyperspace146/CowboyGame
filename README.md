@@ -1,5 +1,4 @@
 # Cowboy Game
-We are gamers
 
 <h3>Style Guide Stuff:</h3>
 <ul>
