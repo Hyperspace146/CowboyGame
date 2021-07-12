@@ -107,7 +107,7 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
-    public void OnShootInput(CallbackContext callbackContext)
+    public void SetShootInput(CallbackContext callbackContext)
     {
         if (callbackContext.started && OnShootInputDown != null)
             OnShootInputDown.Invoke();
