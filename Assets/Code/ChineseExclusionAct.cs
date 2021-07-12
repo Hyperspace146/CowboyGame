@@ -7,7 +7,7 @@ public class ChineseExclusionAct : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Console.log("hello world!");
     }
 
     // Update is called once per frame
@@ -15,4 +15,7 @@ public class ChineseExclusionAct : MonoBehaviour
     {
         
     }
+    
+    
+    
 }
