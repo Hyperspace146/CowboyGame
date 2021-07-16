@@ -32,6 +32,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private PlayerInputHandler inputHandler;
     private PlayerCharacterController characterController;
+    private Animator animator;
     private float lastTimeShot;
 
     // Start is called before the first frame update
@@ -40,6 +41,7 @@ public class PlayerWeaponManager : MonoBehaviour
         CurrentAmmo = ClipSize; //automatically set player's ammo as full at the start
         inputHandler = GetComponent<PlayerInputHandler>();
         characterController = GetComponent<PlayerCharacterController>();
+        animator = GetComponent<Animator>();
     }
 
     /* 
@@ -60,7 +62,6 @@ public class PlayerWeaponManager : MonoBehaviour
                 TryReloadWeapon();
             }
 
-            // For now, projectiles shoot straight forward, no spread yet
             Vector2 shootDirection = GetShootDirectionWithinSpread();
             GameObject projectile = Instantiate(ProjectilePrefab, ShootPoint.position, 
                 transform.rotation);
@@ -73,8 +74,6 @@ public class PlayerWeaponManager : MonoBehaviour
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), 
                 projectile.GetComponent<Collider2D>());
 
-            //Debug.DrawRay(ShootPoint.position, shootDirection, Color.red, 5, false);
-
             // Give velocity to the projectile
             projectile.GetComponent<Rigidbody2D>().velocity = shootDirection * ProjectileSpeed;
 
@@ -86,6 +85,8 @@ public class PlayerWeaponManager : MonoBehaviour
 
             // Update last time shot to now
             lastTimeShot = Time.time;
+
+            animator.SetTrigger("Shoot");
         }
     }
 

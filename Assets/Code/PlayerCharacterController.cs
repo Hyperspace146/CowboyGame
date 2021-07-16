@@ -13,6 +13,7 @@ public class PlayerCharacterController : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerInputHandler input;
     private PlayerStats playerStats;
+    private Animator animator;
 
     void Start()
     {
@@ -22,6 +23,7 @@ public class PlayerCharacterController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         input = GetComponent<PlayerInputHandler>();
         playerStats = GetComponent<PlayerStats>();
+        animator = GetComponent<Animator>();
     }
 
     //physics
@@ -30,5 +32,6 @@ public class PlayerCharacterController : MonoBehaviour
         // Have the displacement when moving scale with the player's current speed stat
         Vector2 displacement = input.MoveInput * Time.fixedDeltaTime * (1 + playerStats.speed * MoveSpeedStatMultiplier);
         rb.MovePosition(rb.position + displacement);
+        animator.SetFloat("Speed", displacement.magnitude);
     }
 }

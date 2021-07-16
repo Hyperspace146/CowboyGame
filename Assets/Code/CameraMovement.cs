@@ -9,6 +9,9 @@ using UnityEngine;
  */
 public class CameraMovement : MonoBehaviour
 {
+    [Tooltip("How fast the camera will move when following the user's crosshair/position.")]
+    public float CameraInterpolationSpeed = 0.05f;
+
     void Update()
     {
         // Could be a source of lag. Needs testing
@@ -40,8 +43,9 @@ public class CameraMovement : MonoBehaviour
                 maxY = Mathf.Max(maxY, curr.y);
             }
 
-            // Find the center of the rect and put the camera there
-            transform.position = new Vector3((minX + maxX) / 2, (minY + maxY) / 2, transform.position.z);
+            // Find the center of the rect and move the camera towards there
+            Vector3 newTargetCamPos = new Vector3((minX + maxX) / 2, (minY + maxY) / 2, transform.position.z);
+            transform.position = Vector3.Lerp(transform.position, newTargetCamPos, CameraInterpolationSpeed);
         }
     }
 }

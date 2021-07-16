@@ -29,5 +29,15 @@ public class Crosshair : MonoBehaviour
     {
         // Place the crosshair based on look input
         crosshair.transform.position = (Vector2) ShootPoint.position + input.LookInput * CrosshairDistanceMultiplier;
+
+        // Flip the character to face left/right depending on which direction we're looking
+        if (input.LookInput.x > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);  // Face right
+        }
+        else if (input.LookInput.x < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);  // Face left
+        }
     }
 }
