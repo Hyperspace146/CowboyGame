@@ -30,7 +30,7 @@ public class PlayerWeaponManager : MonoBehaviour
     public UnityAction OnShoot;
     public UnityAction<GameObject> OnProjectileDespawn;
 
-    private PlayerInputHandler inputHandler;
+    private PlayerInputHandler input;
     private PlayerCharacterController characterController;
     private Animator animator;
     private float lastTimeShot;
@@ -39,9 +39,11 @@ public class PlayerWeaponManager : MonoBehaviour
     void Start()
     {
         CurrentAmmo = ClipSize; //automatically set player's ammo as full at the start
-        inputHandler = GetComponent<PlayerInputHandler>();
+        input = GetComponent<PlayerInputHandler>();
         characterController = GetComponent<PlayerCharacterController>();
         animator = GetComponent<Animator>();
+
+        input.OnShootInputDown.AddListener(TryShoot);
     }
 
     /* 
@@ -51,7 +53,7 @@ public class PlayerWeaponManager : MonoBehaviour
     public void TryShoot()
     {
         // Shoot if able to (not reloading, has ammo, and the time delay between shots has passed)
-        if (CurrentAmmo > 0 && lastTimeShot + DelayBetweenShots < Time.time)
+        if (CurrentAmmo > 0 && lastTimeShot + DelayBetweenShots < Time.time && input.PlayerActionsEnabled)
         {
             // Decrease ammo by one shot
             CurrentAmmo -= 1;
@@ -108,7 +110,7 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         // Get the vector pointing from the gun to the crosshair by subtracting mouse position and
         // the shoot point (gun) position
-        Vector2 currentAimVector = inputHandler.LookInput;
+        Vector2 currentAimVector = input.LookInput;
 
         // Turn that vector into an angle
         float currentAimAngle = Mathf.Atan2(currentAimVector.y, currentAimVector.x) * Mathf.Rad2Deg;
@@ -123,7 +125,7 @@ public class PlayerWeaponManager : MonoBehaviour
     
     public void TryReloadWeapon()
     {
-        if (CurrentAmmo != ClipSize)
+        if (CurrentAmmo != ClipSize && input.PlayerActionsEnabled)
         {
             StartCoroutine(ReloadWeaponCoroutine());
         }
@@ -132,11 +134,11 @@ public class PlayerWeaponManager : MonoBehaviour
     //"IEnumerator" indicates that this function is a coroutine
     public IEnumerator ReloadWeaponCoroutine() 
     {
-        inputHandler.ActionInputEnabled = false;
+        input.PlayerActionsEnabled = false;
         // Wait for the specified reload time before refilling the clip
         yield return new WaitForSeconds(ReloadTime);
         CurrentAmmo = ClipSize;
-        inputHandler.ActionInputEnabled = true;
+        input.PlayerActionsEnabled = true;
     }
 
 }

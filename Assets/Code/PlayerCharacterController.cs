@@ -7,8 +7,11 @@ using UnityEngine;
  */
 public class PlayerCharacterController : MonoBehaviour
 {
+    [Tooltip("Direct multiplier for how must the character moves.")]
+    public float MoveSpeedMultiplier;
+
     [Tooltip("The larger the value, the more the player's current speed stat affects move speed.")]
-    public float MoveSpeedStatMultiplier = 0.5f;
+    public float MoveSpeedStatMultiplier;
 
     private Rigidbody2D rb;
     private PlayerInputHandler input;
@@ -29,9 +32,18 @@ public class PlayerCharacterController : MonoBehaviour
     //physics
     void FixedUpdate()
     {
-        // Have the displacement when moving scale with the player's current speed stat
-        Vector2 displacement = input.MoveInput * Time.fixedDeltaTime * (1 + playerStats.speed * MoveSpeedStatMultiplier);
-        rb.MovePosition(rb.position + displacement);
+        Vector2 displacement;
+        if (input.PlayerMovementEnabled)
+        {
+            // Have the displacement when moving scale with the player's current speed stat
+            displacement = input.MoveInput * MoveSpeedMultiplier * Time.fixedDeltaTime * (1 + playerStats.speed * MoveSpeedStatMultiplier);
+            //rb.MovePosition(rb.position + displacement);
+            rb.velocity = displacement;
+        }
+        else
+        {
+            displacement = Vector2.zero;
+        }
         animator.SetFloat("Speed", displacement.magnitude);
     }
 }

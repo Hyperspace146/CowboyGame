@@ -18,12 +18,12 @@ public class PlayerMelee : MonoBehaviour
     [Tooltip("The distance from the player that at which the melee attack hitbox will originate")]
     public float MeleeHitboxOffset;
 
-    private PlayerInputHandler inputHandler;
+    private PlayerInputHandler input;
     private PlayerCharacterController characterController;
 
     void Start()
     {
-        inputHandler = GetComponent<PlayerInputHandler>();
+        input = GetComponent<PlayerInputHandler>();
         characterController = GetComponent<PlayerCharacterController>();
         MeleeHitbox.GetComponent<ContactDamage>().Damage = Damage;
         MeleeHitbox.enabled = false;
@@ -33,20 +33,24 @@ public class PlayerMelee : MonoBehaviour
     // in accordance with the attack's given startup, active, and recovery time.
     public void MeleeAttack()
     {
-        StartCoroutine(MeleeAttackCoroutine());
+        if (input.PlayerActionsEnabled)
+        {
+            StartCoroutine(MeleeAttackCoroutine());
+        }
+        
     }
 
     // Helper method that allows the melee attack to follow startup, active, and recovery time
     // in real-time seconds
     IEnumerator MeleeAttackCoroutine()
     {
-        inputHandler.ActionInputEnabled = false;
+        input.PlayerActionsEnabled = false;
 
         // TODO: Apply knockback
 
         // Update the position of the melee hit box to be in the direction the player is facing
         // at the right offset. It's a circle collider, so we can disregard rotating the collider
-        MeleeHitbox.GetComponent<Transform>().localPosition = inputHandler.LookInput.normalized
+        MeleeHitbox.GetComponent<Transform>().localPosition = input.LookInput.normalized
             * MeleeHitboxOffset;
 
         yield return new WaitForSeconds(StartupTime);
@@ -65,6 +69,6 @@ public class PlayerMelee : MonoBehaviour
 
         yield return new WaitForSeconds(RecoveryTime);
 
-        inputHandler.ActionInputEnabled = true;
+        input.PlayerActionsEnabled = true;
     }
 }

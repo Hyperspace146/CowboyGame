@@ -31,8 +31,13 @@ public class PlayerInputHandler : MonoBehaviour
     public UnityEvent<double> OnInteractInputUp;
     public Transform ShootPoint;  /* The location that the bullets spawn from. */
 
-    public bool ActionInputEnabled = true;
-    public bool MoveInputEnabled = true;
+    /* 
+     * These two bools control whether the player is able to act (such as interact or shoot) or move.
+     * This disabling/enabling of movement/actions is not managed here but in each individual script as
+     * they reference these booleans. See PlayerRoll for an example.
+    */
+    public bool PlayerActionsEnabled = true;
+    public bool PlayerMovementEnabled = true;
 
     private bool rollInputHeld;
     private bool shootInputHeld;
@@ -75,13 +80,10 @@ public class PlayerInputHandler : MonoBehaviour
         }
         // If gamepad, then the Vector2 should be the stick's input, (0,0) being the stick at neutral.
         // No need for more calculation (needs testing to see if this is right)
-        else if (callbackContext.control.device.name == "Gamepad")
-        {
-            LookInput = callbackContext.ReadValue<Vector2>();
-        }
         else
         {
-            Debug.LogWarning("Unsupported device found setting character look input.");
+            LookInput = callbackContext.ReadValue<Vector2>();
+            print("gamepad look input: " + LookInput);
         }
     }
 
@@ -91,20 +93,11 @@ public class PlayerInputHandler : MonoBehaviour
      */
     public void SetRollInput(CallbackContext callbackContext)
     {
-        // This applies to all the action callbacks: if a call
-        if (ActionInputEnabled)
-        {
-            if (callbackContext.started && OnRollInputDown != null)
-                OnRollInputDown.Invoke();
-            else if (callbackContext.canceled && OnRollInputUp != null)
-                OnRollInputUp.Invoke(callbackContext.duration);
-            rollInputHeld = callbackContext.started || !callbackContext.canceled;
-        }
-        // issue: called multiple time per button press+release, so up is invoked multiple times
-        else if (callbackContext.phase != InputActionPhase.Waiting)
-        {
-            OnInteractInputUp.Invoke(callbackContext.duration);
-        }
+        if (callbackContext.started && OnRollInputDown != null)
+            OnRollInputDown.Invoke();
+        else if (callbackContext.canceled && OnRollInputUp != null)
+            OnRollInputUp.Invoke(callbackContext.duration);
+        rollInputHeld = callbackContext.started || !callbackContext.canceled;
     }
 
     public void SetShootInput(CallbackContext callbackContext)

@@ -87,8 +87,8 @@ public class Health : MonoBehaviour
         {
             // Disable any character control
             PlayerInputHandler inputHandler = GetComponent<PlayerInputHandler>();
-            inputHandler.ActionInputEnabled = false;
-            inputHandler.MoveInputEnabled = false;
+            inputHandler.PlayerActionsEnabled = false;
+            inputHandler.PlayerMovementEnabled = false;
 
             // TODO: Play the death animation
 

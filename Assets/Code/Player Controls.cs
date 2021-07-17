@@ -70,7 +70,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": ""Look"",
                     ""type"": ""Value"",
                     ""id"": ""c5384547-5750-4b36-9c2c-2033eaa01f7c"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Stick"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -189,7 +189,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4d90337f-4cf4-47bc-9709-815cf7c5f2ab"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",

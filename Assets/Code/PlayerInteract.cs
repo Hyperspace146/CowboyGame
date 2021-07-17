@@ -14,10 +14,17 @@ public class PlayerInteract : MonoBehaviour
     // something like a yellow outline)
     private Interactable closestInteractable;
 
+    private PlayerInputHandler input;
+
+    private void Start()
+    {
+        input = GetComponent<PlayerInputHandler>();
+    }
+
     public void Interact()
     {
         // Interact with the interactable closest to us
-        if (closestInteractable != null)
+        if (closestInteractable != null && input.PlayerActionsEnabled)
         {
             closestInteractable.Interact(gameObject);
             closestInteractable = null;
