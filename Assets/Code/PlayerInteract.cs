@@ -19,6 +19,8 @@ public class PlayerInteract : MonoBehaviour
     private void Start()
     {
         input = GetComponent<PlayerInputHandler>();
+
+        input.OnInteractInputDown.AddListener(InteractWithClosestInteractable);
     }
 
     public void Interact()
@@ -54,17 +56,9 @@ public class PlayerInteract : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        //// We check if the collider is an interactable, and if so, check if interact button is pressed
-        //// so we can interact with it
-        //// sidenote: getinteractinputdown is unreliable for some reason, so input held is used instead
-        //Interactable interactable = collision.GetComponent<Interactable>();
-        //if (interactable != null && PlayerActionsEnabled && inputHandler.GetInteractInputDown())
-        //{
-        //    interactable.Interact(gameObject);
-        //}
-
-        // While we are in range of at least one interactable, change the sprite outline color of only the closest 
-        // interactable to yellow, the others being white
+        // While we are in range of at least one interactable, update the closest interactable and make that one
+        // the only one the player is able to interact with. As a visual indicator, change 
+        // its sprite outline color to yellow, while other interactables are white
         if (interactablesInRange.Count >= 1)
         {
             // Find the interactable closest to us
@@ -80,7 +74,7 @@ public class PlayerInteract : MonoBehaviour
                 }
             }
 
-            // Change the closest interactable's outline to yellow while keeping the others white
+            // Change the closest interactable's outlines, and make only the closest one interactable
             foreach (Interactable inter in interactablesInRange)
             {
                 if (inter.Equals(closestInteractable))
@@ -92,6 +86,18 @@ public class PlayerInteract : MonoBehaviour
                     inter.GetComponent<SpriteOutline>().Color = Color.white;
                 }
             }
+        }
+        else
+        {
+            closestInteractable = null;
+        }
+    }
+
+    private void InteractWithClosestInteractable()
+    {
+        if (closestInteractable != null)
+        {
+            closestInteractable.Interact(this.gameObject);
         }
     }
 }

@@ -27,12 +27,14 @@ public class PlayerRoll : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerInputHandler input;
     private SpriteRenderer sprite;
+    private Animator animator;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         input = GetComponent<PlayerInputHandler>();
         sprite = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
 
         input.OnRollInputDown.AddListener(TryRoll);
     }
@@ -42,10 +44,8 @@ public class PlayerRoll : MonoBehaviour
      */
     public void TryRoll()
     {
-        print("tried roll");
         if (RollAvailable && input.PlayerActionsEnabled)
         {
-            print("rolling!");
             StartCoroutine(Roll());
         }
     } 
@@ -57,6 +57,8 @@ public class PlayerRoll : MonoBehaviour
      */
     IEnumerator Roll()
     {
+        animator.SetTrigger("Roll");
+
         // Disable character control
         input.PlayerActionsEnabled = false;
         input.PlayerMovementEnabled = false;

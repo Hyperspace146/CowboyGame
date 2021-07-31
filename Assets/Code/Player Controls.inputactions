@@ -165,7 +165,7 @@
                 {
                     "name": "",
                     "id": "6524a855-438c-4c8c-9269-ca36e13c2bd2",
-                    "path": "<Gamepad>/leftStick/down",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",

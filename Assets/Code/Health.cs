@@ -9,7 +9,7 @@ public class Health : MonoBehaviour
     [Tooltip("If this GameObject is a player, it needs to know its character prefab so it can respawn.")]
     public GameObject CharacterPrefab;
 
-    public event UnityAction OnHealthChange;
+    public event UnityAction<int> OnHealthChange;
     public event UnityAction OnDeath;
 
     public int maxHealth { get; private set; }
@@ -44,7 +44,7 @@ public class Health : MonoBehaviour
         {
             if (OnHealthChange != null)
             {
-                OnHealthChange.Invoke();
+                OnHealthChange.Invoke(value);
             }
 
             maxHealth += value;
@@ -60,7 +60,7 @@ public class Health : MonoBehaviour
     {
         if (OnHealthChange != null)
         {
-            OnHealthChange.Invoke();
+            OnHealthChange.Invoke(value);
         }
 
         health += value;

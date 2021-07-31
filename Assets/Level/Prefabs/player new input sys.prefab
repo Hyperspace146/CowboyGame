@@ -20,9 +20,11 @@ GameObject:
   - component: {fileID: 5395440654496232299}
   - component: {fileID: 6992245823216184418}
   - component: {fileID: 5912890161440560839}
+  - component: {fileID: 2972933459646228941}
   - component: {fileID: 1055748419396553042}
   - component: {fileID: 2492543532705535640}
   - component: {fileID: 930768228428543393}
+  - component: {fileID: 2480996386591782682}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -440,6 +442,24 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 4318480236218512917, guid: e7f8e28a762f3874fa88a71c3599bfab, type: 3}
   ShootPoint: {fileID: 6234414213910049388}
   ProjectileSpreadAngle: 0
+--- !u!114 &2972933459646228941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847052495627346594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb7ac42290269148927e929c6b4b39e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartupTime: 0.1
+  ActiveTime: 0.2
+  RecoveryTime: 0.1
+  Damage: 30
+  MeleeHitboxPrefab: {fileID: 8733932463104143713, guid: 48bc904a41ee5ac4995d381b8fe68c21, type: 3}
+  MeleeHitboxOffset: 1.2
 --- !u!114 &1055748419396553042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -485,6 +505,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2480996386591782682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847052495627346594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09e786760a147a04dbf47dcd6887de43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BloodParticleSystem: {fileID: 2548113559950369368, guid: 6650a7bbe4935164a97be15141ca7127, type: 3}
 --- !u!1 &2335682015719386345
 GameObject:
   m_ObjectHideFlags: 0

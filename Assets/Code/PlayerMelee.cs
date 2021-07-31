@@ -13,8 +13,8 @@ public class PlayerMelee : MonoBehaviour
     public float RecoveryTime;
     [Tooltip("The number of health points that the melee attack will deal")]
     public int Damage;
-    [Tooltip("The hitbox object child to this one ")]
-    public CircleCollider2D MeleeHitbox;
+    [Tooltip("The prefab of the melee hitbox")]
+    public GameObject MeleeHitboxPrefab;
     [Tooltip("The distance from the player that at which the melee attack hitbox will originate")]
     public float MeleeHitboxOffset;
 
@@ -25,8 +25,8 @@ public class PlayerMelee : MonoBehaviour
     {
         input = GetComponent<PlayerInputHandler>();
         characterController = GetComponent<PlayerCharacterController>();
-        MeleeHitbox.GetComponent<ContactDamage>().Damage = Damage;
-        MeleeHitbox.enabled = false;
+
+        input.OnMeleeInputDown.AddListener(MeleeAttack);
     }
 
     // Performs the melee attack by enabling the hitbox in the current look direction, all
@@ -37,7 +37,6 @@ public class PlayerMelee : MonoBehaviour
         {
             StartCoroutine(MeleeAttackCoroutine());
         }
-        
     }
 
     // Helper method that allows the melee attack to follow startup, active, and recovery time
@@ -50,22 +49,24 @@ public class PlayerMelee : MonoBehaviour
 
         // Update the position of the melee hit box to be in the direction the player is facing
         // at the right offset. It's a circle collider, so we can disregard rotating the collider
-        MeleeHitbox.GetComponent<Transform>().localPosition = input.LookInput.normalized
-            * MeleeHitboxOffset;
+        GameObject meleeHitbox = Instantiate(MeleeHitboxPrefab, (Vector2) transform.position + 
+            (input.LookInput.normalized * MeleeHitboxOffset), Quaternion.identity, transform);
+
+        // TODO: have damage scale off of stats
+        meleeHitbox.GetComponent<ContactDamage>().Damage = Damage;
 
         yield return new WaitForSeconds(StartupTime);
 
-        // Reenable the hitbox
+        /*// Reenable the hitbox
         MeleeHitbox.enabled = true;
         // Have the game ignore collisions between the player and their own melee hitbox.
         // Must be called everytime after enabling since the ignore collision will be lost
         // after the hitbox is disabled again
-        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), MeleeHitbox);  
+        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), MeleeHitbox);  */
 
         yield return new WaitForSeconds(ActiveTime);
 
-        // Disable the hitbox after waiting the active time
-        MeleeHitbox.enabled = false;
+        Destroy(meleeHitbox);
 
         yield return new WaitForSeconds(RecoveryTime);
 
